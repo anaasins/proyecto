@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Pagina de contacto
+{% endblock %}
+
+{% block body %}
+
+  <section class="py-5">
+      <div class="container px-5">
+          <!-- Contact form-->
+          <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+              <div class="text-center mb-5">
+                  <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                  <h1 class="fw-bolder">Contacta con nosotros</h1>
+                  <p class="lead fw-normal text-muted mb-0">Ayudanos a mejorar:</p>
+              </div>
+              <div class="row gx-5 justify-content-center">
+                  <div class="col-lg-8 col-xl-6">
+                      <!-- * * * * * * * * * * * * * * *-->
+                      <!-- * * SB Forms Contact Form * *-->
+                      <!-- * * * * * * * * * * * * * * *-->
+
+                      <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                          <!-- Name input-->
+                          <div class="form-floating mb-3">
+                              <input class="form-control" id="name" type="text" placeholder="Nombre" data-sb-validations="required" />
+                              <label for="name">Nombre</label>
+                              <div class="invalid-feedback" data-sb-feedback="name:required">Por favor, diganos su nombre</div>
+                          </div>
+                          <!-- Email address input-->
+                          <div class="form-floating mb-3">
+                              <input class="form-control" id="email" type="email" placeholder="name@ejemplo.com" data-sb-validations="required,email" />
+                              <label for="email">Correo electrónico</label>
+                              <div class="invalid-feedback" data-sb-feedback="email:required">Necesitamos saber su correo.</div>
+                              <div class="invalid-feedback" data-sb-feedback="email:email">El correo no es valido.</div>
+                          </div>
+                          <!-- Phone number input-->
+                          <div class="form-floating mb-3">
+                              <input class="form-control" id="phone" type="tel" placeholder="666 666 666" data-sb-validations="required" />
+                              <label for="phone">Número de teléfono</label>
+                              <div class="invalid-feedback" data-sb-feedback="phone:required">Necesitamos saber su teléfono.</div>
+                          </div>
+                          <!-- Message input-->
+                          <div class="form-floating mb-3">
+                              <textarea class="form-control" id="message" type="text" placeholder="Escriba su mensaje..." style="height: 10rem" data-sb-validations="required"></textarea>
+                              <label for="message">Mensaje</label>
+                              <div class="invalid-feedback" data-sb-feedback="message:required">Por favor, escriba un mensaje.</div>
+                          </div>
+                          <!-- REVISAR ESTO-->
+
+                          <div class="d-none" id="submitSuccessMessage">
+                              <div class="text-center mb-3">
+                                  <div class="fw-bolder">Gracias por contactar con nosotros!</div>
+                                <!--  To activate this form, sign up a
+                                  <br />
+                                  <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>-->
+                              </div>
+                          </div>
+                          <!-- REVISAR ESTO-->
+
+                          <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Algo salio mal, intentelo de nuevo más tarde.</div></div>
+                          <!-- Submit Button-->
+                          <div class="d-grid"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Enviar</button></div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <!-- Contact cards-->
+          <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
+              <div class="col">
+                  <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-facebook"></i></div>
+                  <div class="h5 mb-2">Facebook</div>
+                  <p class="text-muted mb-0">XXXXXXXXX</p>
+              </div>
+              <div class="col">
+                  <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-instagram"></i></div>
+                  <div class="h5">Instagram</div>
+                  <p class="text-muted mb-0">XXXXXXX</p>
+              </div>
+              <div class="col">
+                  <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-twitter"></i></div>
+                  <div class="h5">Twitter</div>
+                  <p class="text-muted mb-0">XXXXXXXX</p>
+              </div>
+              <div class="col">
+                  <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telegram"></i></div>
+                  <div class="h5">Telegram</div>
+                  <p class="text-muted mb-0">XXXXXXXX</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+{% endblock %}
