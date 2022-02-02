@@ -19,9 +19,6 @@ class Entrenamiento
     #[ORM\Column(type: 'string', length: 255)]
     private $descripcion;
 
-    #[ORM\Column(type: 'integer')]
-    private $autor;
-
     #[ORM\Column(type: 'date')]
     private $fecha_creacion;
 
@@ -42,6 +39,10 @@ class Entrenamiento
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $imagen;
+
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'entrenamientos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $autor;
 
     public function getId(): ?int
     {
@@ -68,18 +69,6 @@ class Entrenamiento
     public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    public function getAutor(): ?int
-    {
-        return $this->autor;
-    }
-
-    public function setAutor(int $autor): self
-    {
-        $this->autor = $autor;
 
         return $this;
     }
@@ -164,6 +153,18 @@ class Entrenamiento
     public function setImagen(?string $imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getAutor(): ?Usuario
+    {
+        return $this->autor;
+    }
+
+    public function setAutor(?Usuario $autor): self
+    {
+        $this->autor = $autor;
 
         return $this;
     }
