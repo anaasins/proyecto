@@ -40,12 +40,16 @@ class Usuario
     #[ORM\JoinColumn(nullable: false)]
     private $rol;
 
-    #[ORM\OneToMany(mappedBy: 'autor', targetEntity: Entrenamiento::class, orphanRemoval: true)]
-    private $entrenamientos;
+    #[ORM\OneToMany(mappedBy: 'autor', targetEntity: Ejercicio::class)]
+    private $ejercicios;
+
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Entrenamiento::class, orphanRemoval: true)]
+    private $entrens;
 
     public function __construct()
     {
-        $this->entrenamientos = new ArrayCollection();
+        $this->ejercicios = new ArrayCollection();
+        $this->entrens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,29 +154,59 @@ class Usuario
     }
 
     /**
-     * @return Collection|Entrenamiento[]
+     * @return Collection|Ejercicio[]
      */
-    public function getEntrenamientos(): Collection
+    public function getEjercicios(): Collection
     {
-        return $this->entrenamientos;
+        return $this->ejercicios;
     }
 
-    public function addEntrenamiento(Entrenamiento $entrenamiento): self
+    public function addEjercicio(Ejercicio $ejercicio): self
     {
-        if (!$this->entrenamientos->contains($entrenamiento)) {
-            $this->entrenamientos[] = $entrenamiento;
-            $entrenamiento->setAutor($this);
+        if (!$this->ejercicios->contains($ejercicio)) {
+            $this->ejercicios[] = $ejercicio;
+            $ejercicio->setAutor($this);
         }
 
         return $this;
     }
 
-    public function removeEntrenamiento(Entrenamiento $entrenamiento): self
+    public function removeEjercicio(Ejercicio $ejercicio): self
     {
-        if ($this->entrenamientos->removeElement($entrenamiento)) {
+        if ($this->ejercicios->removeElement($ejercicio)) {
             // set the owning side to null (unless already changed)
-            if ($entrenamiento->getAutor() === $this) {
-                $entrenamiento->setAutor(null);
+            if ($ejercicio->getAutor() === $this) {
+                $ejercicio->setAutor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entrenamiento[]
+     */
+    public function getEntrens(): Collection
+    {
+        return $this->entrens;
+    }
+
+    public function addEntren(Entrenamiento $entren): self
+    {
+        if (!$this->entrens->contains($entren)) {
+            $this->entrens[] = $entren;
+            $entren->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntren(Entrenamiento $entren): self
+    {
+        if ($this->entrens->removeElement($entren)) {
+            // set the owning side to null (unless already changed)
+            if ($entren->getUsuario() === $this) {
+                $entren->setUsuario(null);
             }
         }
 

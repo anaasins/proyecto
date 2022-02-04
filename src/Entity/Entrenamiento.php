@@ -13,158 +13,84 @@ class Entrenamiento
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $nombre;
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'entrens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $usuario;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $descripcion;
+    #[ORM\ManyToOne(targetEntity: Ejercicio::class, inversedBy: 'entrenamientos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $ejercicio;
 
     #[ORM\Column(type: 'date')]
-    private $fecha_creacion;
+    private $fecha;
 
-    #[ORM\Column(type: 'boolean')]
-    private $revisado;
+    #[ORM\Column(type: 'integer')]
+    private $puntuacion;
 
-    #[ORM\Column(type: 'date', nullable: true)]
-    private $fecha_revision;
-
-    #[ORM\Column(type: 'boolean')]
-    private $aceptado;
-
-    #[ORM\Column(type: 'boolean')]
-    private $disponible;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $documento;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $imagen;
-
-    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'entrenamientos')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $autor;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $nivel_alcanzado;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getUsuario(): ?Usuario
     {
-        return $this->nombre;
+        return $this->usuario;
     }
 
-    public function setNombre(string $nombre): self
+    public function setUsuario(?Usuario $usuario): self
     {
-        $this->nombre = $nombre;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
-    public function getDescripcion(): ?string
+    public function getEjercicio(): ?Ejercicio
     {
-        return $this->descripcion;
+        return $this->ejercicio;
     }
 
-    public function setDescripcion(string $descripcion): self
+    public function setEjercicio(?Ejercicio $ejercicio): self
     {
-        $this->descripcion = $descripcion;
+        $this->ejercicio = $ejercicio;
 
         return $this;
     }
 
-    public function getFechaCreacion(): ?\DateTimeInterface
+    public function getFecha(): ?\DateTimeInterface
     {
-        return $this->fecha_creacion;
+        return $this->fecha;
     }
 
-    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): self
+    public function setFecha(\DateTimeInterface $fecha): self
     {
-        $this->fecha_creacion = $fecha_creacion;
+        $this->fecha = $fecha;
 
         return $this;
     }
 
-    public function getRevisado(): ?bool
+    public function getPuntuacion(): ?int
     {
-        return $this->revisado;
+        return $this->puntuacion;
     }
 
-    public function setRevisado(bool $revisado): self
+    public function setPuntuacion(int $puntuacion): self
     {
-        $this->revisado = $revisado;
+        $this->puntuacion = $puntuacion;
 
         return $this;
     }
 
-    public function getFechaRevision(): ?\DateTimeInterface
+    public function getNivelAlcanzado(): ?int
     {
-        return $this->fecha_revision;
+        return $this->nivel_alcanzado;
     }
 
-    public function setFechaRevision(?\DateTimeInterface $fecha_revision): self
+    public function setNivelAlcanzado(?int $nivel_alcanzado): self
     {
-        $this->fecha_revision = $fecha_revision;
-
-        return $this;
-    }
-
-    public function getAceptado(): ?bool
-    {
-        return $this->aceptado;
-    }
-
-    public function setAceptado(bool $aceptado): self
-    {
-        $this->aceptado = $aceptado;
-
-        return $this;
-    }
-
-    public function getDisponible(): ?bool
-    {
-        return $this->disponible;
-    }
-
-    public function setDisponible(bool $disponible): self
-    {
-        $this->disponible = $disponible;
-
-        return $this;
-    }
-
-    public function getDocumento(): ?string
-    {
-        return $this->documento;
-    }
-
-    public function setDocumento(string $documento): self
-    {
-        $this->documento = $documento;
-
-        return $this;
-    }
-
-    public function getImagen(): ?string
-    {
-        return $this->imagen;
-    }
-
-    public function setImagen(?string $imagen): self
-    {
-        $this->imagen = $imagen;
-
-        return $this;
-    }
-
-    public function getAutor(): ?Usuario
-    {
-        return $this->autor;
-    }
-
-    public function setAutor(?Usuario $autor): self
-    {
-        $this->autor = $autor;
+        $this->nivel_alcanzado = $nivel_alcanzado;
 
         return $this;
     }

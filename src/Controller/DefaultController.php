@@ -4,19 +4,19 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Entrenamiento;
-use App\Repository\EntrenamientoRepository;
+use App\Entity\Ejercicio;
+use App\Repository\EjercicioRepository;
 
 class DefaultController extends AbstractController
 {
   /**
    * @Route("/", name="home_page")
    */
-    public function homeAction(EntrenamientoRepository $entrenamientoRepository): Response
+    public function homeAction(EjercicioRepository $ejercicioRepository): Response
     {
       //Capturar el repositorio de la tabla contra la bd
-      $entrenamientos = $entrenamientoRepository->findThreeToShow();
-      return $this->render('frontal/index.html.twig', array('entrenamientos'=>$entrenamientos));
+      $ejercicios = $ejercicioRepository->findThreeToShow();
+      return $this->render('frontal/index.html.twig', array('ejercicios'=>$ejercicios));
     }
     /**
     * @Route("/login", name="login_page")

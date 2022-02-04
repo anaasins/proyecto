@@ -47,31 +47,4 @@ class EntrenamientoRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    /**
-    * @return Entrenamiento[] Returns an array of Entrenamiento objects
-    */
-
-    public function findAllToShow()
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.revisado = 1')
-            ->andWhere('e.aceptado = 1')
-            ->andWhere('e.disponible = 1')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findThreeToShow()
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.revisado = 1')
-            ->andWhere('e.aceptado = 1')
-            ->andWhere('e.disponible = 1')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }
