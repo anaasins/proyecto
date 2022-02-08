@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8" />
       <title>{% block title %}Hola caracola!{% endblock %}</title>
+    {% block stylesheets %} {% endblock %}
+
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
         <!-- Bootstrap icons-->
@@ -10,7 +12,6 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
 
-        {% block stylesheets %} {% endblock %}
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
@@ -26,15 +27,16 @@
                           <li class="nav-item"><a class="nav-link" href="{{ path('login_page') }}">Login</a></li>
                           <li class="nav-item"><a class="nav-link" href="{{ path('contact_page') }}">Contacto</a></li>
                           <li class="nav-item"><a class="nav-link" href="{{ path('profile_page') }}">Mi perfil</a></li>
-                        <!--  <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
                           <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
+                              <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="{{ path('profile_page') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi perfil</a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                  <li><a class="dropdown-item" href="#">Blog Home</a></li>
-                                  <li><a class="dropdown-item" href="#">Blog Post</a></li>
+                                  <li><a class="dropdown-item" href="#">Datos personales</a></li>
+                                  <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
+                                  <li><a class="dropdown-item" href="#">Gráficas</a></li>
+                                  <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
                               </ul>
                           </li>
-                          <li class="nav-item dropdown">
+                          <!--  <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                   <li><a class="dropdown-item" href="#">Portfolio Overview</a></li>

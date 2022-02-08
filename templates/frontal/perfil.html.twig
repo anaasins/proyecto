@@ -5,5 +5,73 @@ Pagina personal
 {% endblock %}
 
 {% block body %}
-  <p>PERFIL PERSONAL</p>
+  <section class="py-5" id="cards">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="text-center">
+                    <h2 class="fw-bolder">Bienvenido antonio:</h2>
+                    <p class="lead fw-normal text-muted mb-5"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row gx-5">
+    <!--empieza tarjeta-->
+        <div class="col-lg-4 mb-5">
+            <div class="card h-100 shadow border-0">
+                <div class="card-body p-4" style="border-left: 10px solid #212529;" onclick="mostrar('datos')">
+                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Datos Personales</h5></a>
+                </div>
+            </div>
+        </div>
+      <!--Acaba tarjeta-->
+      <!--empieza tarjeta-->
+          <div class="col-lg-4 mb-5">
+              <div class="card h-100 shadow border-0">
+                  <div class="card-body p-4" style="border-left: 10px solid #212529;">
+                      <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Gráficas</h5></a>
+                  </div>
+              </div>
+          </div>
+        <!--Acaba tarjeta-->
+        <!--empieza tarjeta-->
+            <div class="col-lg-4 mb-5">
+                <div class="card h-100 shadow border-0">
+                    <div class="card-body p-4" style="border-left: 10px solid #212529;">
+                        <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Cambiar contraseña</h5></a>
+                    </div>
+                </div>
+            </div>
+          <!--Acaba tarjeta-->
+          <!--empieza tarjeta-->
+              <div class="col-lg-4 mb-5">
+                  <div class="card h-100 shadow border-0">
+                      <div class="card-body p-4" style="border-left: 10px solid #212529;" onclick="mostrar('juegos')">
+                          <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Mis juegos</h5></a>
+                      </div>
+                  </div>
+              </div>
+            <!--Acaba tarjeta-->
+
+      </div>
+  </div>
+  </section>
+
+  <section class="py-5" id="datos" style="display: none;">
+  <p>datos</p>
+  </section>
+  <section class="py-5" id="juegos" style="display: none;">
+  <p>datos</p>
+  </section>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<!-- encara no funciona be-->
+  <script type="text/javascript">
+    function mostrar(id){
+      document.getElementById(id).style='';
+    }
+  </script>
 {% endblock %}
