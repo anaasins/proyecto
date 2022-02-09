@@ -28,13 +28,6 @@ class DefaultController extends AbstractController
     {
         return $this->render('frontal/contact.html.twig');
     }
-
-     #[Route('/profile', name: 'profile_page')]
-    public function profileAction(): Response
-    {
-        return $this->render('frontal/perfil.html.twig');
-    }
-
 }
 
  ?>

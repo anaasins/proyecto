@@ -14,6 +14,6 @@ class EjercicioController extends AbstractController
     public function games_action(EjercicioRepository $ejercicioRepository): Response
     {
         $ejercicios = $ejercicioRepository->findAllToShow();
-        return $this->render('frontal/ejercicios.html.twig', array('ejercicios'=>$ejercicios));
+        return $this->render('ejercicio/index.html.twig', array('ejercicios'=>$ejercicios));
     }
 }

@@ -46,6 +46,9 @@ class Usuario
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Entrenamiento::class, orphanRemoval: true)]
     private $entrens;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $apellidos;
+
     public function __construct()
     {
         $this->ejercicios = new ArrayCollection();
@@ -209,6 +212,18 @@ class Usuario
                 $entren->setUsuario(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(string $apellidos): self
+    {
+        $this->apellidos = $apellidos;
 
         return $this;
     }
