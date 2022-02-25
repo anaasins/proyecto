@@ -19,7 +19,7 @@ class EjercicioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion', TextareaType::class)
-            //->add('fecha_creacion')
+            ->add('fecha_creacion')
             //->add('revisado')
             //->add('fecha_revision')
             //->add('aceptado')

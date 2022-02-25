@@ -22,7 +22,7 @@ class Ejercicio
     private $descripcion;
 
     #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'ejercicios')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $autor;
 
     #[ORM\Column(type: 'date')]
