@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class EjercicioType extends AbstractType
 {
@@ -19,12 +20,12 @@ class EjercicioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('descripcion', TextareaType::class)
-            ->add('fecha_creacion')
+            //->add('fecha_creacion')
             //->add('revisado')
             //->add('fecha_revision')
-            //->add('aceptado')
+            ->add('aceptado')
             ///->add('disponible')
-            ->add('documento', TextareaType::class, ['label' => 'Codigo'])
+            ->add('documento', CKEditorType::class)
             ->add('imagen', FileType::class)
             ->add('niveles_disponibles', IntegerType::class)
           //  ->add('autor')

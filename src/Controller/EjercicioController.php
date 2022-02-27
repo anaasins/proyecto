@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTimeInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 use App\Form\EjercicioType;
 use App\Entity\Ejercicio;
@@ -41,19 +42,20 @@ class EjercicioController extends AbstractController
           /*$datos = $request->request->all();
           $file = $form['imagen']->getData();
           $file->move("img/ejercicios/", "nueva.png");*/
+          $user = $usuarioRepository->findById(1);
           $em = $doctrine->getManager();
-
-          $ejercicio->setNombre($form['nombre']->getData());
-          $ejercicio->setDescripcion($form['descripcion']->getData());
-          $ejercicio->setAutor(null);
-          $ejercicio->setFechaCreacion($form['fecha_creacion']->getData());
+          $ejercicio = $form->getData();
+          //$ejercicio->setNombre($form['nombre']->getData());
+          //$ejercicio->setDescripcion($form['descripcion']->getData());
+          $ejercicio->setAutor($user[0]);
+          $ejercicio->setFechaCreacion(new \DateTime('@'.strtotime('now')));
           $ejercicio->setRevisado(false);
           $ejercicio->setFechaRevision(null);
           $ejercicio->setAceptado(false);
           $ejercicio->setDisponible(false);
           $ejercicio->setDocumento('documento');
           $ejercicio->setImagen('imagen');
-          $ejercicio->setNivelesDisponibles(2);
+          //$ejercicio->setNivelesDisponibles(2);
 
            $em->persist($ejercicio);
            $em->flush();
