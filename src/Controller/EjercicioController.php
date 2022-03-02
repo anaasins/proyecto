@@ -39,27 +39,38 @@ class EjercicioController extends AbstractController
         $form = $this->createForm(EjercicioType::class, $ejercicio);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() && !is_null($request)){
-          /*$datos = $request->request->all();
+          //coger imagen y cambiar nombre y guardarla en el repositorio correspondiente
           $file = $form['imagen']->getData();
-          $file->move("img/ejercicios/", "nueva.png");*/
+          $extension = $file->guessExtension();
+          if (!$extension) {
+            $extension = 'bin';
+          }
+          $imgName =  rand(1, 99999).'.'.$extension;
+          $file->move("img/ejercicios/", $imgName);
+          //coger usuario
+          // TODO -> coger el correspondiente a traves de la sesioon
           $user = $usuarioRepository->findById(1);
           $em = $doctrine->getManager();
+          //añadir los datos del form al objeto ejercicio
           $ejercicio = $form->getData();
-          //$ejercicio->setNombre($form['nombre']->getData());
-          //$ejercicio->setDescripcion($form['descripcion']->getData());
+          //cambiar o añadir los datos que sean necesarios del objeto ejercicio
           $ejercicio->setAutor($user[0]);
           $ejercicio->setFechaCreacion(new \DateTime('@'.strtotime('now')));
           $ejercicio->setRevisado(false);
           $ejercicio->setFechaRevision(null);
           $ejercicio->setAceptado(false);
           $ejercicio->setDisponible(false);
+          //TODO --> ver como guardo el codigo en un documento o si lo cambio par que suban ellos el documento
           $ejercicio->setDocumento('documento');
-          $ejercicio->setImagen('imagen');
-          //$ejercicio->setNivelesDisponibles(2);
+          $ejercicio->setImagen("img/ejercicios/".$imgName);
 
+            //guardo el objeto ejercicio en la base de datos
            $em->persist($ejercicio);
            $em->flush();
 
+           //redirijo al usuario a la pagina de ejercicios
+           //TODO --> enviar correo al admin
+           //TODO --> pensar a donde redirijo al usuario.
            return $this->redirectToRoute('games_page');
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form,]);
