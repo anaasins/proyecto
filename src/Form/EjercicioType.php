@@ -23,13 +23,13 @@ class EjercicioType extends AbstractType
             //->add('fecha_creacion')
             //->add('revisado')
             //->add('fecha_revision')
-            ->add('aceptado')
+            //->add('aceptado')
             ///->add('disponible')
             ->add('documento', CKEditorType::class)
             ->add('imagen', FileType::class)
-            ->add('niveles_disponibles', IntegerType::class)
+            ->add('niveles_disponibles', IntegerType::class, ['label' => 'Número de niveles disponibles'])
           //  ->add('autor')
-            ->add('enviar', SubmitType::class, ['label' => 'Añadir Ejercicio']);
+            ->add('enviar', SubmitType::class, ['label' => 'Añadir']);
         ;
     }
 
