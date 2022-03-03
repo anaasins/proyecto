@@ -67,15 +67,14 @@ class EjercicioController extends AbstractController
             //guardo el objeto ejercicio en la base de datos
            $em->persist($ejercicio);
            $em->flush();
-
-           //redirijo al usuario a la pagina de ejercicios
-           //TODO --> enviar correo al admin
+           //mandar correo al admin
            $email = (new Email())
                       ->from('asinsanna@gmail.com')
                       ->to('aasins97@gmail.com')
                       ->subject('Time for Symfony Mailer!')
                       ->text('Sending emails is fun again!');
            $mailer->send($email);
+           //redirijo al usuario a la pagina de ejercicios
            //TODO --> pensar a donde redirijo al usuario.
            //return $this->redirectToRoute('games_page');
         }
