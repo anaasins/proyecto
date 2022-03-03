@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraints\DateTimeInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 use App\Form\EjercicioType;
 use App\Entity\Ejercicio;
@@ -26,16 +28,14 @@ class EjercicioController extends AbstractController
     }
 
     #[Route('/newGame', name: 'newGame_page')]
-    public function newGameAction(ManagerRegistry $doctrine, Request $request, EjercicioRepository $ejercicioRepository, UsuarioRepository $usuarioRepository): Response
+    public function newGameAction(ManagerRegistry $doctrine,
+                                  Request $request,
+                                  EjercicioRepository $ejercicioRepository,
+                                  UsuarioRepository $usuarioRepository,
+                                  MailerInterface $mailer): Response
     {
 
         $ejercicio = new Ejercicio();
-      /*  $formBuilder = $this->createFormBuilder($ejercicio)
-                            ->add('nombre', TextType::class)
-                            ->add('descripcion', TextareaType::class)
-                            ->add('niveles_disponibles', IntegerType::class)
-                            ->add('enviar', SubmitType::class, ['label' => 'Añadir Ejercicio']);
-        $form = $formBuilder->getForm();*/
         $form = $this->createForm(EjercicioType::class, $ejercicio);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() && !is_null($request)){
@@ -70,8 +70,14 @@ class EjercicioController extends AbstractController
 
            //redirijo al usuario a la pagina de ejercicios
            //TODO --> enviar correo al admin
+           $email = (new Email())
+                      ->from('asinsanna@gmail.com')
+                      ->to('aasins97@gmail.com')
+                      ->subject('Time for Symfony Mailer!')
+                      ->text('Sending emails is fun again!');
+           $mailer->send($email);
            //TODO --> pensar a donde redirijo al usuario.
-           return $this->redirectToRoute('games_page');
+           //return $this->redirectToRoute('games_page');
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form,]);
     }
