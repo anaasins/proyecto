@@ -2185,6 +2185,10 @@ progress {
   color: #6c757d;
 }
 
+.form-control:required{
+  border: 1px solid red;
+}
+
 .form-control {
   display: block;
   width: 100%;
@@ -2202,6 +2206,7 @@ progress {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;

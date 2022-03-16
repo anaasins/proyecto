@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<section class="py-5">
+  <div class="container px-5">
+    <!-- Contact form-->
+      <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+          <h1 class="fw-bolder">Registro:</h1>
+          <p style="color: red">Los elementos en rojo son obligatorios.</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-8">
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.nombre)}}
+                {{ form_row(registrationForm.apellidos) }}
+                {{ form_row(registrationForm.telefono, {
+                    type: 'tel'
+                }) }}
+                {{ form_row(registrationForm.fechaNacimiento, {
+                    type: 'Date'
+                }) }}
+
+                {{ form_row(registrationForm.correo) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+                <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Crear cuenta nueva</button></div>
+            {{ form_end(registrationForm) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
