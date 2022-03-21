@@ -38,8 +38,11 @@ class UsuarioController extends AbstractController
     #[Route('/datos', name: 'datos_page')]
     public function datosAction(UsuarioRepository $usuarioRepository): Response
     {
-        $datos = $usuarioRepository->findById(1);
-        return $this->render('usuario/datos.html.twig', array('datos'=>$datos));
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        //$datos = $usuarioRepository->findById(1);
+        return $this->render('usuario/datos.html.twig', array('usuario'=>$user));
     }
 
     #[Route('/register', name: 'app_register')]
@@ -105,9 +108,8 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
-
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -124,4 +126,14 @@ class UsuarioController extends AbstractController
       throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
+    //Activar en security.yaml si realment es necessari guardar el utim acces per algo
+    #[Route('/update', name: 'app_update')]
+    public function update(EntityManagerInterface $entityManager): Response
+    {
+      $user= $this->getUser();
+      $user->setUltimoAcceso(new \DateTime('@'.strtotime('now')));
+      $entityManager->persist($user);
+      $entityManager->flush();
+      return $this->redirectToRoute('home_page');
+    }
 }

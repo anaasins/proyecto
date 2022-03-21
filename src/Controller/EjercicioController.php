@@ -31,9 +31,10 @@ class EjercicioController extends AbstractController
     public function newGameAction(ManagerRegistry $doctrine,
                                   Request $request,
                                   EjercicioRepository $ejercicioRepository,
-                                  UsuarioRepository $usuarioRepository,
                                   MailerInterface $mailer): Response
     {
+      //controlar que esta la sesión iniciada.
+      $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $ejercicio = new Ejercicio();
         $form = $this->createForm(EjercicioType::class, $ejercicio);
@@ -47,14 +48,13 @@ class EjercicioController extends AbstractController
           }
           $imgName =  rand(1, 99999).'.'.$extension;
           $file->move("img/ejercicios/", $imgName);
-          //coger usuario
-          // TODO -> coger el correspondiente a traves de la sesioon
-          $user = $usuarioRepository->findById(1);
+          //coger usuario con la sesion iniciada
+          $user = $this->getUser();
           $em = $doctrine->getManager();
           //añadir los datos del form al objeto ejercicio
           $ejercicio = $form->getData();
           //cambiar o añadir los datos que sean necesarios del objeto ejercicio
-          $ejercicio->setAutor($user[0]);
+          $ejercicio->setAutor($user);
           $ejercicio->setFechaCreacion(new \DateTime('@'.strtotime('now')));
           $ejercicio->setRevisado(false);
           $ejercicio->setFechaRevision(null);
@@ -67,17 +67,18 @@ class EjercicioController extends AbstractController
             //guardo el objeto ejercicio en la base de datos
            $em->persist($ejercicio);
            $em->flush();
-           //mandar correo al admin
-           $email = (new Email())
+           //TODO -> mandar correo al admin
+           /*$email = (new Email())
                       ->from('asinsanna@gmail.com')
                       ->to('aasins97@gmail.com')
                       ->subject('Time for Symfony Mailer!')
                       ->text('Sending emails is fun again!');
-           $mailer->send($email);
+           $mailer->send($email);*/
            //redirijo al usuario a la pagina de ejercicios
+
            //TODO --> pensar a donde redirijo al usuario.
-           //return $this->redirectToRoute('games_page');
+           return $this->redirectToRoute('games_page');
         }
-        return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form,]);
+        return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form]);
     }
 }
