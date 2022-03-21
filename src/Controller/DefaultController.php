@@ -17,12 +17,6 @@ class DefaultController extends AbstractController
       return $this->render('frontal/index.html.twig', array('ejercicios'=>$ejercicios));
     }
 
-     #[Route('/login', name: 'login_page')]
-    public function loginAction(): Response
-    {
-        return $this->render('frontal/login.html.twig');
-    }
-
      #[Route('/contact', name: 'contact_page')]
     public function contactAction(): Response
     {
