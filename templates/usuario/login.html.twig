@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Pagina de contacto
+Pagina de login
 {% endblock %}
 
 {% block body %}
@@ -13,6 +13,11 @@ Pagina de contacto
               <div class="text-center mb-5">
                   <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
                   <h1 class="fw-bolder">Iniciar sesión</h1>
+                  <p class="lead fw-normal text-muted mb-0">
+                    ¿No estás registrado? Registrate pulsando
+                    <a href="{{ path('app_register') }}">aquí.</a>
+                  </p>
+
               </div>
               <div class="row gx-5 justify-content-center">
                   <div class="col-lg-8 col-xl-6">

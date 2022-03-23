@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Página de registro{% endblock %}
 
 {% block body %}
 <section class="py-5">
@@ -10,6 +10,10 @@
         <div class="text-center mb-5">
           <h1 class="fw-bolder">Registro:</h1>
           <p style="color: red">Los elementos en rojo son obligatorios.</p>
+          <p class="lead fw-normal text-muted mb-0">
+            ¿Ya estás registrado? Inicia sesión pulsando
+            <a href="{{ path('app_login') }}">aquí.</a>
+          </p>
         </div>
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-8">

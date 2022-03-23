@@ -165,6 +165,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRol(?Rol $rol): self
     {
         $this->rol = $rol;
+        $this->setRoles($this->roles);
 
         return $this;
     }
@@ -279,14 +280,22 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if(empty($roles)){
+          $this->setRoles($roles);
+          //$roles[] = "ROLE_USER";
+        }
+        if(!in_array('ROLE_USER', $roles)){
+          array_push($roles, 'ROLE_USER');
+        }
 
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
+        $rolD = $this->rol->getRol();
         $this->roles = $roles;
+        array_push($this->roles, $rolD);
 
         return $this;
     }

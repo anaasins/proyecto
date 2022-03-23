@@ -34,7 +34,7 @@ class EjercicioController extends AbstractController
                                   MailerInterface $mailer): Response
     {
       //controlar que esta la sesión iniciada.
-      $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+      $this->denyAccessUnlessGranted('ROLE_USER');
 
         $ejercicio = new Ejercicio();
         $form = $this->createForm(EjercicioType::class, $ejercicio);

@@ -32,13 +32,15 @@ class UsuarioController extends AbstractController
     #[Route('/profile', name: 'profile_page')]
      public function profileAction(): Response
      {
+       $this->denyAccessUnlessGranted('ROLE_USER');
+
          return $this->render('usuario/index.html.twig');
      }
 
     #[Route('/datos', name: 'datos_page')]
     public function datosAction(UsuarioRepository $usuarioRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
 
         //$datos = $usuarioRepository->findById(1);
@@ -65,6 +67,7 @@ class UsuarioController extends AbstractController
             $user->setFechaRegistro(new \DateTime('@'.strtotime('now')));
             $rol = $rolRepository->findById(2);
             $user->setRol($rol[0]);
+            $user->setIsVerified(true);
 
             $entityManager->persist($user);
             $entityManager->flush();

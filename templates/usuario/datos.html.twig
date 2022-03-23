@@ -35,19 +35,19 @@ Pagina personal
                           {% endif %}
                           <li class="mb-2">
                             <i class="bi bi-check-circle-fill text-secondary"></i>
-                              {{usuario.fechaNacimiento|date('d-m-Y')}}
+                              Fecha nacimiento: {{usuario.fechaNacimiento|date('d-m-Y')}}
                           </li>
-                          <li class="mb-2">
+                          <!--<li class="mb-2">
                             <i class="bi bi-check-circle-fill text-secondary"></i>
                               {{usuario.fechaRegistro|date('d-m-Y')}}
-                          </li>
-                          <li class="mb-2">
+                          </li>-->
+                        <!--  <li class="mb-2">
                             <i class="bi bi-check-circle-fill text-secondary"></i>
                               {{usuario.ultimoAcceso|date('d-m-Y')}}
-                          </li>
+                          </li>-->
                           <li class="mb-2">
                             <i class="bi bi-check-circle-fill text-secondary"></i>
-                              {{usuario.rol.rol}}
+                              Rol: {{usuario.roles.0}}
                           </li>
                         </ul>
                         <div class="d-grid"><a class="btn btn-primary" href="#!">Editar mis datos</a></div>
