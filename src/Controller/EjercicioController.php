@@ -88,8 +88,15 @@ class EjercicioController extends AbstractController
     {
       $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $ejercicios = $ejercicioRepository->findBy(array('autor' => $this->getUser()));
-        return $this->render('ejercicio/misEjercicios.html.twig', array('ejercicios'=>$ejercicios));
+        $ejerciciosDisponibles = $ejercicioRepository->findBy(array('autor' => $this->getUser(), 'aceptado' => true, 'disponible' => true));
+        $ejerciciosNoDisponibles = $ejercicioRepository->findBy(array('autor' => $this->getUser(), 'aceptado' => true, 'disponible' => false));
+        $ejerciciosDenegados = $ejercicioRepository->findBy(array('autor' => $this->getUser(), 'aceptado' => false, 'revisado' => true));
+        $ejerciciosR = $ejercicioRepository->findBy(array('autor' => $this->getUser(), 'revisado' => false));
+        return $this->render('ejercicio/misEjercicios.html.twig', array('ejerciciosD'=>$ejerciciosDisponibles,
+                                                                        'ejerciciosN' => $ejerciciosNoDisponibles,
+                                                                        'ejerciciosDen' => $ejerciciosDenegados,
+                                                                        'ejerciciosR' => $ejerciciosR
+                                                                        ));
     }
 
     #[Route('/cambiarDisponible/{id}', name: 'app_cambiarDisponible')]
