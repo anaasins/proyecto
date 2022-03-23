@@ -109,4 +109,42 @@ class EjercicioController extends AbstractController
       $entityManager->flush();
       return $this->redirectToRoute('myGames_page');
     }
+
+    #[Route('/revisarejercicios', name: 'gamesReview_page')]
+    public function gamesReviewAction(EjercicioRepository $ejercicioRepository): Response
+    {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $ejerciciosAceptados = $ejercicioRepository->findBy(array('aceptado' => true, 'revisado' => true));
+        $ejerciciosDenegados = $ejercicioRepository->findBy(array('aceptado' => false, 'revisado' => true));
+        $ejerciciosR = $ejercicioRepository->findBy(array('revisado' => false));
+        return $this->render('ejercicio/revisarEjercicios.html.twig', array('ejerciciosA' => $ejerciciosAceptados,
+                                                                        'ejerciciosD' => $ejerciciosDenegados,
+                                                                        'ejerciciosR' => $ejerciciosR
+                                                                        ));
+    }
+
+    #[Route('/aceptarejercicio/{id}', name: 'app_aceptarEjercicio')]
+    public function aceptarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
+    {
+      $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
+      $aceptado = $ejercicio -> getAceptado();
+      $ejercicio -> setAceptado(true);
+      $ejercicio -> setRevisado(true);
+      $ejercicio -> setDisponible(true);
+      $entityManager->persist($ejercicio);
+      $entityManager->flush();
+      return $this->redirectToRoute('gamesReview_page');
+    }
+    #[Route('/denegarejercicio/{id}', name: 'app_denegarEjercicio')]
+    public function denegarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
+    {
+      $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
+      $aceptado = $ejercicio -> getAceptado();
+      $ejercicio -> setAceptado(false);
+      $ejercicio -> setRevisado(true);
+      $entityManager->persist($ejercicio);
+      $entityManager->flush();
+      return $this->redirectToRoute('gamesReview_page');
+    }
 }

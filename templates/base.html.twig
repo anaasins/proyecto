@@ -29,11 +29,12 @@
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                           <li class="nav-item"><a class="nav-link" href="{{ path('newGame_page') }}">Añadir ejercicio</a></li>
                           <li class="nav-item"><a class="nav-link" href="{{ path('profile_page') }}">Mi perfil</a></li>
-                          <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
                           {% if is_granted('ROLE_ADMIN') %}
+                          <li class="nav-item"><a class="nav-link" href="{{ path('gamesReview_page') }}">Revisar ejercicios</a></li>
                           {% endif %}
+                          <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
                         {% else %}
-                          <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>                          
+                          <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
                         {% endif %}
 
 
