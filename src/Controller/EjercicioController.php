@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\DateTimeInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Doctrine\ORM\EntityManagerInterface;
 
 use App\Form\EjercicioType;
 use App\Entity\Ejercicio;
@@ -86,8 +87,19 @@ class EjercicioController extends AbstractController
     public function myGamesAction(EjercicioRepository $ejercicioRepository): Response
     {
       $this->denyAccessUnlessGranted('ROLE_USER');
-      
+
         $ejercicios = $ejercicioRepository->findBy(array('autor' => $this->getUser()));
         return $this->render('ejercicio/misEjercicios.html.twig', array('ejercicios'=>$ejercicios));
+    }
+
+    #[Route('/cambiarDisponible/{id}', name: 'app_cambiarDisponible')]
+    public function cambiarDisponibleAction(int $id, EntityManagerInterface $entityManager): Response
+    {
+      $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
+      $disponible = $ejercicio -> getDisponible();
+      $ejercicio -> setDisponible(!$disponible);
+      $entityManager->persist($ejercicio);
+      $entityManager->flush();
+      return $this->redirectToRoute('home_page');
     }
 }

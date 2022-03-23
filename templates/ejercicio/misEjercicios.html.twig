@@ -17,6 +17,7 @@ Pagina de ejercicios
               </div>
           </div>
           <div class="row gx-5">
+          <div class="d-grid"><a class="btn btn-primary" href="{{ path('hola') }}">Cambiar disponibilidad</a></div>
 
             {% for ejercicio in ejercicios %}
             <!--empieza tarjeta-->
@@ -26,6 +27,7 @@ Pagina de ejercicios
                         <div class="card-body p-4">
                             <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">{{ejercicio.nombre}}</h5></a>
                             <p class="card-text mb-0">{{ejercicio.descripcion}}</p>
+
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
@@ -33,6 +35,7 @@ Pagina de ejercicios
                                     <div class="small">
                                         <div class="fw-bold">{{ejercicio.autor.nombre}}</div>
                                         <div class="text-muted">{{ejercicio.fechaCreacion|date('d-m-Y')}}</div>
+                                        <div class="text-muted">{{ejercicio.disponible}}</div>
                                     </div>
                                 </div>
                             </div>
