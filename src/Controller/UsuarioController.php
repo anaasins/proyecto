@@ -10,6 +10,7 @@ use App\Entity\Usuario;
 use App\Repository\UsuarioRepository;
 use App\Repository\RolRepository;
 use App\Form\RegistrationFormType;
+use App\Form\ChangePasswordFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -111,7 +112,7 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
+    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -138,5 +139,42 @@ class UsuarioController extends AbstractController
       $entityManager->persist($user);
       $entityManager->flush();
       return $this->redirectToRoute('home_page');
+    }
+
+    #[Route('/cambiarContra', name: 'app_changePass')]
+    public function changePass(Request $request, UsuarioRepository $usuarioRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+      //TODO --> llevaro per a olvide contraseña
+      $this->denyAccessUnlessGranted('ROLE_USER');
+      $user = $this->getUser();
+      
+      /*if ($this->getUser()) {
+        $user = $this->getUser();
+      }else {
+        $user = new Usuario();
+      }*/
+      $form = $this->createForm(ChangePasswordFormType::class, $user);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+        // TODO -> olvidé mi contraseña
+        /*  if(!$this->getUser())
+          {
+            $user = $entityManager->getRepository(Usuario::class)->findOneBy(['correo', $form->get('correo')->getData()]);
+          }*/
+          // encode the plain password
+          $user->setPassword(
+          $userPasswordHasher->hashPassword(
+                  $user,
+                  $form->get('plainPassword')->getData()
+              )
+          );
+          $entityManager->flush();
+          return $this->redirectToRoute('app_login');
+      }
+
+      return $this->render('usuario/cambiarContra.html.twig', [
+          'changePasswordForm' => $form->createView(),
+      ]);
     }
 }
