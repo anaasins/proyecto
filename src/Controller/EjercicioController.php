@@ -81,4 +81,13 @@ class EjercicioController extends AbstractController
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form]);
     }
+
+    #[Route('/misejercicios', name: 'myGames_page')]
+    public function myGamesAction(EjercicioRepository $ejercicioRepository): Response
+    {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+      
+        $ejercicios = $ejercicioRepository->findBy(array('autor' => $this->getUser()));
+        return $this->render('ejercicio/misEjercicios.html.twig', array('ejercicios'=>$ejercicios));
+    }
 }
