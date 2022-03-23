@@ -112,13 +112,13 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
+    public function index(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('usuario/login.html.twig', [
-            'controller_name' => 'LoginController',
+            //'controller_name' => 'LoginController',
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
@@ -147,7 +147,7 @@ class UsuarioController extends AbstractController
       //TODO --> llevaro per a olvide contraseña
       $this->denyAccessUnlessGranted('ROLE_USER');
       $user = $this->getUser();
-      
+
       /*if ($this->getUser()) {
         $user = $this->getUser();
       }else {

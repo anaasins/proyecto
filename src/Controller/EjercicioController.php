@@ -63,7 +63,7 @@ class EjercicioController extends AbstractController
           $ejercicio->setDisponible(false);
           //TODO --> ver como guardo el codigo en un documento o si lo cambio par que suban ellos el documento
           $ejercicio->setDocumento('documento');
-          $ejercicio->setImagen("img/ejercicios/".$imgName);
+          $ejercicio->setImagen($imgName);
 
             //guardo el objeto ejercicio en la base de datos
            $em->persist($ejercicio);
@@ -100,6 +100,6 @@ class EjercicioController extends AbstractController
       $ejercicio -> setDisponible(!$disponible);
       $entityManager->persist($ejercicio);
       $entityManager->flush();
-      return $this->redirectToRoute('home_page');
+      return $this->redirectToRoute('myGames_page');
     }
 }
