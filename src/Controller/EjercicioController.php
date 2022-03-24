@@ -147,4 +147,30 @@ class EjercicioController extends AbstractController
       $entityManager->flush();
       return $this->redirectToRoute('gamesReview_page');
     }
+
+    #[Route('/descargarimagen/{id}', name: 'app_descargarImagen')]
+    public function descargarImagenAction(int $id, EntityManagerInterface $entityManager): Response
+    {
+      $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
+      $imagen = $ejercicio -> getImagen();
+      $imagenPath = "img/ejercicios/".$imagen;
+
+      //$documentos = scandir("img/ejercicios/");
+      //var_dump($documentos);
+      if(!empty($imagen) && file_exists($imagenPath)){
+        // Define headers
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$imagen");
+        header("Content-Type: application/zip");
+        header("Content-Transfer-Encoding: binary");
+        // Read the file
+        readfile($imagenPath);
+        exit;
+      }else{
+          echo 'The file does not exist.';
+      }
+      //return $this->redirectToRoute('gamesReview_page');
+      return $this->render('prueba/prueba.html.twig');
+    }
 }
