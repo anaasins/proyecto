@@ -13,6 +13,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 
 use App\Form\EjercicioType;
 use App\Entity\Ejercicio;
@@ -157,19 +158,14 @@ class EjercicioController extends AbstractController
       $imagenPath = "img/ejercicios/".$imagen;
       */
       $finder = new Finder();
+      $fs = new Filesystem();
       // find all files in the current directory
       $finder->files()->in("img/ejercicios");
-      var_dump($finder);
-      echo "<br>";
       $zip = new \ZipArchive();
       $zip->open("prueba.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
       foreach ($finder as $file) {
           $absoluteFilePath = $file->getRealPath();
-          echo $absoluteFilePath;
-          echo "<br>";
           $fileNameWithExtension = $file->getRelativePathname();
-          echo $fileNameWithExtension;
-          echo "<br>";
           $zip->addFile($absoluteFilePath, $fileNameWithExtension);
       }
       $zip->close();
@@ -184,6 +180,8 @@ class EjercicioController extends AbstractController
         header("Content-Transfer-Encoding: binary");
         // Read the file
         readfile("prueba.zip");
+        $fs->remove("prueba.zip");
+
         exit;
       }else{
           echo 'The file does not exist.';
