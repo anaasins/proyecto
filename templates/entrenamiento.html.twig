@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="/css/entrenamiento.css">
+  {% block css %}{% endblock %}
+    <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body onload="load()">
+
+      <div id="cabecera">
+        <p id="puntos">{% block puntos %}{% endblock %}</p>
+      </div>
+
+      <div id="juego">
+        {% block juego %}
+
+        {% endblock %}
+      </div>
+      <div id="botones">
+        
+      </div>
+  </body>
+  {% block funcionalidad %}{% endblock %}
+</html>

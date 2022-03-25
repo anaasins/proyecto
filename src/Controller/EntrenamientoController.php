@@ -10,5 +10,9 @@ use App\Repository\EntrenamientoRepository;
 
 class EntrenamientoController extends AbstractController
 {
-    
+  #[Route('/entrenar/{id}', name: 'app_entrenar')]
+  public function entrenarAction(int $id): Response
+  {
+      return $this->render('ejercicios_disponibles/'.$id.'/index.html.twig');
+  }
 }

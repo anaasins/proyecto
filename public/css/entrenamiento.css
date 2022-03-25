@@ -1,0 +1,30 @@
+#juego{
+  min-height: 500px;
+  max-height: 800px;
+  width: 80%;
+  margin-left: 10%;
+  border-style: solid;
+  border-color: black;
+  margin-top: 0;
+}
+#cabecera{
+  text-align: center;
+}
+#cabecera p{
+  font-size: 40px;
+  font-weight: bold;
+  font-family: serif;
+  margin: 5px;
+}
+.principal{
+  margin-left: 40%;
+}
+.opciones{
+  margin-top: 15%;
+  margin-left: 7%;
+}
+img{
+  height: 15%;
+  width: 15%;
+  margin:10px;
+}

@@ -79,8 +79,7 @@ class EjercicioController extends AbstractController
            $mailer->send($email);*/
            //redirijo al usuario a la pagina de ejercicios
 
-           //TODO --> pensar a donde redirijo al usuario.
-           return $this->redirectToRoute('games_page');
+           return $this->redirectToRoute('myGames_page');
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form]);
     }
@@ -112,7 +111,7 @@ class EjercicioController extends AbstractController
       return $this->redirectToRoute('myGames_page');
     }
 
-    #[Route('/revisarejercicios', name: 'gamesReview_page')]
+    #[Route('/ejerciciosPorRevisar', name: 'gamesReview_page')]
     public function gamesReviewAction(EjercicioRepository $ejercicioRepository): Response
     {
       $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -150,8 +149,8 @@ class EjercicioController extends AbstractController
       return $this->redirectToRoute('gamesReview_page');
     }
 
-    #[Route('/descargarimagen/{id}', name: 'app_descargarImagen')]
-    public function descargarImagenAction(int $id, EntityManagerInterface $entityManager): Response
+    #[Route('/revisarEjercicio/{id}', name: 'app_revisarEjercicio')]
+    public function revisarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
     {
       /*$ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $imagen = $ejercicio -> getImagen();
@@ -160,7 +159,7 @@ class EjercicioController extends AbstractController
       $finder = new Finder();
       $fs = new Filesystem();
       // find all files in the current directory
-      $finder->files()->in("img/ejercicios");
+      $finder->files()->in("../templates/ejercicios_disponibles/".$id);
       $zip = new \ZipArchive();
       $zip->open("prueba.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
       foreach ($finder as $file) {

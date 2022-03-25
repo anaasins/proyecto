@@ -24,7 +24,8 @@ Pagina de ejercicios
                     <div class="card h-100 shadow border-0">
                         <img class="card-img-top" src="img/ejercicios/{{ejercicio.imagen}}" alt="Imagen portada ejercicio" />
                         <div class="card-body p-4">
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">{{ejercicio.nombre}}</h5></a>
+                            <!--<a class="text-decoration-none link-dark stretched-link" href=""></a>-->
+                            <h5 class="card-title mb-3">{{ejercicio.nombre}}</h5>
                             <p class="card-text mb-0">{{ejercicio.descripcion}}</p>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -36,6 +37,8 @@ Pagina de ejercicios
                                     </div>
                                 </div>
                             </div>
+                            <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_entrenar', {id: ejercicio.id}) }}">Entrenar</a></div>
+
                         </div>
                     </div>
                 </div>
