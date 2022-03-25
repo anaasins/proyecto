@@ -11,6 +11,7 @@ use App\Repository\UsuarioRepository;
 use App\Repository\RolRepository;
 use App\Form\RegistrationFormType;
 use App\Form\ChangePasswordFormType;
+use App\Form\UpdateUserFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -37,16 +38,6 @@ class UsuarioController extends AbstractController
 
          return $this->render('usuario/index.html.twig');
      }
-
-    #[Route('/datos', name: 'datos_page')]
-    public function datosAction(UsuarioRepository $usuarioRepository): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-        $user = $this->getUser();
-
-        //$datos = $usuarioRepository->findById(1);
-        return $this->render('usuario/datos.html.twig', array('usuario'=>$user));
-    }
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, RolRepository $rolRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
@@ -175,6 +166,28 @@ class UsuarioController extends AbstractController
 
       return $this->render('usuario/cambiarContra.html.twig', [
           'changePasswordForm' => $form->createView(),
+      ]);
+    }
+
+    #[Route('/actualizarDatos', name: 'app_updateUser')]
+    public function updateUserAction(Request $request, UsuarioRepository $usuarioRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+      //TODO --> llevaro per a olvide contraseña
+      $this->denyAccessUnlessGranted('ROLE_USER');
+      $user = $this->getUser();
+
+      $form = $this->createForm(UpdateUserFormType::class, $user);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+        // TODO -> olvidé mi contraseña
+          $entityManager->flush();
+          return $this->redirectToRoute('profile_page');
+      }
+
+      return $this->render('usuario/actualizarDatos.html.twig', [
+          'updateForm' => $form->createView(),
+          'usuario' => $user
       ]);
     }
 }
