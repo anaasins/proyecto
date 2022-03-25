@@ -40,8 +40,8 @@ Pagina de ejercicios
                                   </div>
                               </div>
                               <div class="d-flex align-items-end justify-content-between">
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_aceptarEjercicio', {id: ejercicio.id}) }}">Aceptar</a></div>
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_denegarEjercicio', {id: ejercicio.id}) }}">Denegar</a></div>
+                                  <div class="d-grid"><a class="btn btn-success" href="{{ path('app_aceptarEjercicio', {id: ejercicio.id}) }}">Aceptar</a></div>
+                                  <div class="d-grid"><a class="btn btn-danger" href="{{ path('app_denegarEjercicio', {id: ejercicio.id}) }}">Denegar</a></div>
                                   <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_descargarImagen', {id: ejercicio.id}) }}">Revisar</a></div>
                               </div>
                           </div>
@@ -87,7 +87,10 @@ Pagina de ejercicios
                                           <div class="text-muted">{{ejercicio.fechaCreacion|date('d-m-Y')}}</div>
                                       </div>
                                   </div>
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_aceptarEjercicio', {id: ejercicio.id}) }}">Aceptar</a></div>
+                              </div>
+                              <div class="d-flex align-items-end justify-content-between">
+                                  <div class="d-grid"><a class="btn btn-success" href="{{ path('app_aceptarEjercicio', {id: ejercicio.id}) }}">Aceptar</a></div>
+                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_descargarImagen', {id: ejercicio.id}) }}">Revisar</a></div>
                               </div>
                           </div>
                       </div>
@@ -132,7 +135,10 @@ Pagina de ejercicios
                                           <div class="text-muted">{{ejercicio.fechaCreacion|date('d-m-Y')}}</div>
                                       </div>
                                   </div>
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_denegarEjercicio', {id: ejercicio.id}) }}">Denegar</a></div>
+                              </div>
+                              <div class="d-flex align-items-end justify-content-between">
+                                  <div class="d-grid"><a class="btn btn-danger" href="{{ path('app_denegarEjercicio', {id: ejercicio.id}) }}">Denegar</a></div>
+                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_descargarImagen', {id: ejercicio.id}) }}">Revisar</a></div>
                               </div>
                           </div>
                       </div>
@@ -150,7 +156,7 @@ Pagina de ejercicios
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <div class="text-center">
-                        <h2 class="fw-bolder">Aún no has creado ningún ejercicio</h2>
+                        <h2 class="fw-bolder"> No hay ejercicios por revisar.</h2>
                     </div>
                 </div>
             </div>

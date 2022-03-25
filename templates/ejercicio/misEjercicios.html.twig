@@ -12,7 +12,7 @@ Pagina de ejercicios
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <div class="text-center">
-                        <h2 class="fw-bolder">Mis ejercicios disponibles:</h2>
+                        <h2 class="fw-bolder">Ejercicios disponibles para otros usuarios:</h2>
                         <p class="lead fw-normal text-muted mb-5"></p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ Pagina de ejercicios
                                           <div class="text-muted">{{ejercicio.fechaCreacion|date('d-m-Y')}}</div>
                                       </div>
                                   </div>
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_cambiarDisponible', {id: ejercicio.id}) }}">Cambiar disponibilidad</a></div>
+                                  <div class="d-grid"><a class="btn btn-danger" href="{{ path('app_cambiarDisponible', {id: ejercicio.id}) }}">Ocultar</a></div>
                               </div>
                           </div>
                       </div>
@@ -57,7 +57,7 @@ Pagina de ejercicios
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <div class="text-center">
-                        <h2 class="fw-bolder">Ejercicios no disponibles:</h2>
+                        <h2 class="fw-bolder">Ejercicios ocultos para otros usuarios:</h2>
                         <p class="lead fw-normal text-muted mb-5"></p>
                     </div>
                 </div>
@@ -83,7 +83,7 @@ Pagina de ejercicios
                                           <div class="text-muted">{{ejercicio.fechaCreacion|date('d-m-Y')}}</div>
                                       </div>
                                   </div>
-                                  <div class="d-grid"><a class="btn btn-primary" href="{{ path('app_cambiarDisponible', {id: ejercicio.id}) }}">Cambiar disponibilidad</a></div>
+                                  <div class="d-grid"><a class="btn btn-success" href="{{ path('app_cambiarDisponible', {id: ejercicio.id}) }}">Mostrar</a></div>
                               </div>
                           </div>
                       </div>
