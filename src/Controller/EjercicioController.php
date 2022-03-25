@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Finder\Finder;
 
 use App\Form\EjercicioType;
 use App\Entity\Ejercicio;
@@ -151,21 +152,38 @@ class EjercicioController extends AbstractController
     #[Route('/descargarimagen/{id}', name: 'app_descargarImagen')]
     public function descargarImagenAction(int $id, EntityManagerInterface $entityManager): Response
     {
-      $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
+      /*$ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $imagen = $ejercicio -> getImagen();
       $imagenPath = "img/ejercicios/".$imagen;
+      */
+      $finder = new Finder();
+      // find all files in the current directory
+      $finder->files()->in("img/ejercicios");
+      var_dump($finder);
+      echo "<br>";
+      $zip = new \ZipArchive();
+      $zip->open("prueba.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+      foreach ($finder as $file) {
+          $absoluteFilePath = $file->getRealPath();
+          echo $absoluteFilePath;
+          echo "<br>";
+          $fileNameWithExtension = $file->getRelativePathname();
+          echo $fileNameWithExtension;
+          echo "<br>";
+          $zip->addFile($absoluteFilePath, $fileNameWithExtension);
+      }
+      $zip->close();
 
-      //$documentos = scandir("img/ejercicios/");
-      //var_dump($documentos);
-      if(!empty($imagen) && file_exists($imagenPath)){
+      //descargar Zip
+      if(file_exists("prueba.zip")){
         // Define headers
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
-        header("Content-Disposition: attachment; filename=$imagen");
+        header("Content-Disposition: attachment; filename=prueba.zip");
         header("Content-Type: application/zip");
         header("Content-Transfer-Encoding: binary");
         // Read the file
-        readfile($imagenPath);
+        readfile("prueba.zip");
         exit;
       }else{
           echo 'The file does not exist.';
