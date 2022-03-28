@@ -14,9 +14,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EntrenamientoController extends AbstractController
 {
-  #[Route('/entrenar/{id}', name: 'app_entrenar')]
+  #[Route('/entrenar/{id}', name: 'entrenar_page')]
   public function entrenarAction(int $id, EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted('ROLE_USER');
+
       $user= $this->getUser();
       $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
       $entrenamiento = $entrenamientoRepository->findOneBy(array('usuario'=>$user->getId(), 'ejercicio'=>$id), array('id'=>'DESC'));
@@ -29,6 +31,8 @@ class EntrenamientoController extends AbstractController
   #[Route('/guardarEntrenamiento', name: 'app_guardarEntrenamiento')]
   public function guardarEntrenamientoAction(EntityManagerInterface $entityManager): Response
   {
+    $this->denyAccessUnlessGranted('ROLE_USER');
+
     $entrenamiento = new Entrenamiento();
     $user= $this->getUser();
     $ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$_POST['ejercicio']));

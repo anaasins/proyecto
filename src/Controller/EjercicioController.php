@@ -111,7 +111,7 @@ class EjercicioController extends AbstractController
       return $this->redirectToRoute('myGames_page');
     }
 
-    #[Route('/ejerciciosPorRevisar', name: 'gamesReview_page')]
+    #[Route('/revisar', name: 'gamesReview_page')]
     public function gamesReviewAction(EjercicioRepository $ejercicioRepository): Response
     {
       $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -156,36 +156,57 @@ class EjercicioController extends AbstractController
       $imagen = $ejercicio -> getImagen();
       $imagenPath = "img/ejercicios/".$imagen;
       */
+      $zipName = $id.".zip";
       $finder = new Finder();
       $fs = new Filesystem();
       // find all files in the current directory
-      $finder->files()->in("../templates/ejercicios_disponibles/".$id);
       $zip = new \ZipArchive();
-      $zip->open("prueba.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-      foreach ($finder as $file) {
-          $absoluteFilePath = $file->getRealPath();
-          $fileNameWithExtension = $file->getRelativePathname();
-          $zip->addFile($absoluteFilePath, $fileNameWithExtension);
+      $zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+      if ($fs -> exists("../templates/ejercicios_disponibles/".$id)) {
+        $finder->files()->in("../templates/ejercicios_disponibles/".$id);
+        //descargo codigo
+        if (!empty($finder)) {
+          $zip -> addEmptyDir("codigo");
+          foreach ($finder as $file) {
+              $absoluteFilePath = $file->getRealPath();
+              $fileNameWithExtension = $file->getRelativePathname();
+              $zip->addFile($absoluteFilePath, 'codigo/'.$fileNameWithExtension);
+          }
+        }
       }
+      //descargo extras si es que hay
+      if ($fs->exists("extras_ejercicios/".$id)) {
+        $finder = new Finder();
+        $finder->files()->in("extras_ejercicios/".$id);
+        if(!empty($finder)){
+          $zip -> addEmptyDir("extras");
+          foreach ($finder as $file) {
+              $absoluteFilePath = $file->getRealPath();
+              $fileNameWithExtension = $file->getRelativePathname();
+              $zip->addFile($absoluteFilePath, 'extras/'.$fileNameWithExtension);
+          }
+        }
+      }
+
       $zip->close();
 
       //descargar Zip
-      if(file_exists("prueba.zip")){
+      if(file_exists($zipName)){
         // Define headers
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
-        header("Content-Disposition: attachment; filename=prueba.zip");
+        header("Content-Disposition: attachment; filename=".$zipName);
         header("Content-Type: application/zip");
         header("Content-Transfer-Encoding: binary");
         // Read the file
-        readfile("prueba.zip");
-        $fs->remove("prueba.zip");
+        readfile($zipName);
+        $fs->remove($zipName);
 
         exit;
       }else{
           echo 'The file does not exist.';
       }
-      //return $this->redirectToRoute('gamesReview_page');
-      return $this->render('prueba/prueba.html.twig');
+      return $this->redirectToRoute('gamesReview_page');
+      //return $this->render('prueba/prueba.html.twig');
     }
 }

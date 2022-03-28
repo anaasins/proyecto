@@ -10,18 +10,19 @@
   </style>
 {% endblock %}
 {% block juego %}
-  <img src="/img/ejercicios/editada.jpg" id="elejida" class="principal">
+  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" id="elejida" class="principal">
   <br>
   <br>
   <br>
-  <img src="/img/ejercicios/editada3.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/img/ejercicios/editada.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/img/ejercicios/editada3.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/img/ejercicios/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
 {% endblock %}
 {% block funcionalidad %}
   <script type="text/javascript">
     //tu codigo
+    //ultima_version\public\extras_ejercicios
     var elejida = document.getElementById('elejida');
 
     function comprobar(ev) {
