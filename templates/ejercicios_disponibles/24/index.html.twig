@@ -1,6 +1,14 @@
 {% extends 'entrenamiento.html.twig' %}
 {% block title %}Título de mi juego{% endblock %}
-{% block css %}{% endblock %}
+{% block css %}
+  <style media="screen">
+    img{
+      height: 15%;
+      width: 15%;
+      margin:10px;
+    }
+  </style>
+{% endblock %}
 {% block puntos %}{% endblock %}
 {% block juego %}
   <img src="/img/ejercicios/editada.jpg" id="elejida" class="principal">

@@ -11,10 +11,13 @@
   text-align: center;
 }
 #cabecera p{
-  font-size: 40px;
-  font-weight: bold;
+  font-size: 20px;
   font-family: serif;
   margin: 5px;
+}
+#titulo{
+  font-weight: bold;
+  font-size: 40px !important;
 }
 .principal{
   margin-left: 40%;
@@ -23,8 +26,24 @@
   margin-top: 15%;
   margin-left: 7%;
 }
-img{
-  height: 15%;
-  width: 15%;
-  margin:10px;
+#botones{
+  margin-left: 10%;
+  margin-top: 1%;
+}
+
+#botones button{
+  margin: 1%;
+  padding: 1%;
+  border-radius: 20px;
+  font-family: serif;
+  font-size: 20px;
+  color: white;
+}
+
+#acabar{
+  background-color: green;
+}
+
+#empezar{
+  background-color: red;
 }
