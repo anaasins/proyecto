@@ -7,6 +7,14 @@
   border-color: black;
   margin-top: 0;
 }
+canvas{
+  position: absolute;
+  left: 10%;
+  border: 2px solid black;
+  border-radius: 20px;
+  min-height: 500;
+  max-height: 800;
+}
 #cabecera{
   text-align: center;
 }
@@ -27,13 +35,15 @@
   margin-left: 7%;
 }
 #botones{
+  position: relative;
+  top: 500px;
   margin-left: 10%;
   margin-top: 1%;
 }
 
 #botones button{
   margin: 1%;
-  padding: 1%;
+  padding: 2%;
   border-radius: 20px;
   font-family: serif;
   font-size: 20px;

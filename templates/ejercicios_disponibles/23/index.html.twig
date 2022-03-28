@@ -1,0 +1,106 @@
+{% extends 'entrenamiento.html.twig' %}
+{% block css %}
+  <style media="screen">
+
+  </style>
+{% endblock %}
+{% block juego %}
+  <canvas id="canvas" width="1200" height="500" onclick="pulsado(event)" onload="canvasLoad()"></canvas>
+  <button type="button" name="button" onclick="empezarPartida()">Click para empezar</button>
+{% endblock %}
+{% block funcionalidad %}
+  <script type="text/javascript">
+    var canvas, ctx;
+    var xPelota, yPelota;
+    var vel, direccion, arriba, grados, radianes;
+    var requestID;
+    var heigth, width;
+    function load() {
+      //no tocar
+      parrafoPuntos = document.getElementById('puntos');
+      inputPuntos = document.getElementById('inputPuntos');
+      puntos = parrafoPuntos.innerHTML;
+      inputPuntos.value = puntos;
+      parrafoNivel = document.getElementById('nivel');
+      inputNivel = document.getElementById('inputNivel');
+      nivel = parrafoNivel.innerHTML;
+      inputNivel.value = nivel;
+
+      canvas = document.getElementById('canvas');
+      ctx = canvas.getContext('2d');
+      height = canvas.height;
+      width = canvas.width;
+      requestID=0;
+      vel = puntos * 0.2;
+      direccion="der";
+      arriba=true;
+      xPelota=width / 2;
+      yPelota=height /2;
+      grados = Math.random() * (60 - 1) + 1;
+      radianes = grados * Math.PI/180;
+      dibujarPelota();
+    }
+
+    function dibujarPelota() {
+      //pelota
+      ctx.beginPath();
+        ctx.arc(xPelota,yPelota, 20, 0, 2* Math.PI);
+        var grd = ctx.createRadialGradient(xPelota, yPelota, 20, xPelota, yPelota, 10);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1, "yellow");
+        ctx.fillStyle=grd;
+        ctx.fill();
+      ctx.closePath();
+    }
+    function empezarPartida() {
+      animate();
+    }
+
+    function animate() {
+      requestId = requestAnimationFrame(animate);
+      muevePelota();
+    }
+    function muevePelota() {
+      var time = new Date().getTime() * 0.002;
+      ctx.clearRect(xPelota-22, yPelota-22, 60, 60);
+
+      if(direccion=="iz"){
+        xPelota-=Math.cos(radianes) * vel;
+      }else {
+        xPelota+=Math.cos(radianes) * vel;
+      }
+      if (arriba) {
+        yPelota-=Math.sin(radianes) * vel;
+      }else {
+        yPelota+= Math.sin(radianes) * vel;
+      }
+
+      if(yPelota <= 30 || yPelota >= height-30){
+        arriba = !arriba;
+        grados = Math.random() * (180 - 0) + 0;
+        radianes = grados * Math.PI/180;
+      }else if(xPelota<=20){
+        direccion="der";
+        grados = Math.random() * (180 - 0) + 0;
+        radianes = grados * Math.PI/180;
+      }else if (xPelota >= width-20) {
+        direccion="iz";
+        grados = Math.random() * (180 - 0) + 0;
+        radianes = grados * Math.PI/180;
+      }
+
+      dibujarPelota();
+    }
+    function pulsado(event) {
+      var rect= canvas.getBoundingClientRect();
+      var x=event.clientX - rect.left;
+      var y=event.clientY - rect.top;
+      if (x >= xPelota-20 && x <= xPelota+20 && y >= yPelota-20 && y <= yPelota+20) {
+        console.log("acierto");
+        actualizarPuntos(1);
+        vel += 0.2;
+        console.log(vel);
+      }
+    }
+  </script>
+{% endblock %}

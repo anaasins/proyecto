@@ -1,5 +1,4 @@
 {% extends 'entrenamiento.html.twig' %}
-{% block title %}Título de mi juego{% endblock %}
 {% block css %}
   <style media="screen">
     img{
@@ -10,14 +9,16 @@
   </style>
 {% endblock %}
 {% block juego %}
-  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" id="elejida" class="principal">
-  <br>
-  <br>
-  <br>
-  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-  <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  <div id="juego">
+    <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" id="elejida" class="principal">
+    <br>
+    <br>
+    <br>
+    <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+    <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+    <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+    <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+  </div>
 {% endblock %}
 {% block funcionalidad %}
   <script type="text/javascript">
