@@ -27,8 +27,20 @@ class EntrenamientoController extends AbstractController
   }
 
   #[Route('/guardarEntrenamiento', name: 'app_guardarEntrenamiento')]
-  public function guardarEntrenamientoAction(): Response
+  public function guardarEntrenamientoAction(EntityManagerInterface $entityManager): Response
   {
+    $entrenamiento = new Entrenamiento();
+    $user= $this->getUser();
+    $ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$_POST['ejercicio']));
 
+    $entrenamiento -> setUsuario($user);
+    $entrenamiento -> setEjercicio($ejercicio);
+    $entrenamiento -> setFecha(new \DateTime('@'.strtotime('now')));
+    $entrenamiento -> setPuntuacion($_POST['puntos']);
+    $entrenamiento -> setNivelAlcanzado($_POST['nivel']);
+    $entityManager->persist($entrenamiento);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('games_page');
   }
 }

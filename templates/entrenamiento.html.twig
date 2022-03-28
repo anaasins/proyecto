@@ -22,6 +22,7 @@
         <form class="" action="{{ path('app_guardarEntrenamiento') }}" method="post">
           <input type="hidden" name="puntos" id="inputPuntos" value="{{entrenamiento.puntuacion}}">
           <input type="hidden" name="nivel" id="inputNivel" value="{{entrenamiento.nivelAlcanzado}}">
+          <input type="hidden" name="ejercicio" value="{{ejercicio.id}}">
           <button type="submit" name="button" id="acabar">Acabar entrenamiento</button>
           <button type="button" name="button" id="empezar" onclick="empezarCero()">Empezar de 0</button>
         </form>
@@ -59,8 +60,10 @@
     function empezarCero() {
       puntos = 0;
       nivel = 0;
-      actualizarNivel();
-      actualizarPuntos();
+      parrafoPuntos.innerHTML=puntos;
+      inputPuntos.value = puntos;
+      parrafoNivel.innerHTML = nivel;
+      inputNivel.value = nivel;
     }
   </script>
   {% block funcionalidad %}{% endblock %}
