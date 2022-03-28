@@ -27,5 +27,41 @@
         </form>
       </div>
   </body>
+  <script type="text/javascript">
+    var parrafoPuntos, parrafoNivel, inputNivel, inputPuntos;
+    var puntos, nivel;
+
+    function load() {
+      //no tocar
+      parrafoPuntos = document.getElementById('puntos');
+      inputPuntos = document.getElementById('inputPuntos');
+      puntos = parrafoPuntos.innerHTML;
+      inputPuntos.value = puntos;
+      parrafoNivel = document.getElementById('nivel');
+      inputNivel = document.getElementById('inputNivel');
+      nivel = parrafoNivel.innerHTML;
+      inputNivel.value = nivel;
+    }
+
+    //no tocar
+    function actualizarPuntos(p) {
+      puntos = parseInt(puntos) + p;
+      parrafoPuntos.innerHTML=puntos;
+      inputPuntos.value = puntos;
+    }
+    //no tocar
+    function actualizarNivel(n) {
+      nivel = parseInt(nivel) + n
+      parrafoNivel.innerHTML = nivel;
+      inputNivel.value = nivel;
+    }
+    //no tocar
+    function empezarCero() {
+      puntos = 0;
+      nivel = 0;
+      actualizarNivel();
+      actualizarPuntos();
+    }
+  </script>
   {% block funcionalidad %}{% endblock %}
 </html>
