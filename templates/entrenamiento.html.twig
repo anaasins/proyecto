@@ -4,13 +4,13 @@
     <link rel="stylesheet" href="/css/entrenamiento.css">
   {% block css %}{% endblock %}
     <meta charset="utf-8">
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{{ejercicio.nombre}}{% endblock %}</title>
   </head>
   <body onload="load()">
-
       <div id="cabecera">
-        <p id="titulo">Mi juego</p>
-        <p>Nivel: <span id="nivel">0</span> - Puntos: <span id="puntos"></span></p>
+        <p id="titulo">{{ejercicio.nombre}}</p>
+        <p>Nivel: <span id="nivel">{{entrenamiento.nivelAlcanzado}}</span> - Puntos: <span id="puntos">{{entrenamiento.puntuacion}}</span></p>
+        {% block cabecera %}{% endblock %}
       </div>
 
       <div id="juego">
@@ -19,10 +19,12 @@
         {% endblock %}
       </div>
       <div id="botones">
-        <input type="hidden" name="puntos" id="inputPuntos" value="">
-        <input type="hidden" name="nivel" id="nivel" value="">
-        <button type="button" name="button" id="acabar">Acabar entrenamiento</button>
-        <button type="button" name="button" id="empezar">Empezar de nuevo</button>
+        <form class="" action="{{ path('app_guardarEntrenamiento') }}" method="post">
+          <input type="hidden" name="puntos" id="inputPuntos" value="{{entrenamiento.puntuacion}}">
+          <input type="hidden" name="nivel" id="inputNivel" value="{{entrenamiento.nivelAlcanzado}}">
+          <button type="submit" name="button" id="acabar">Acabar entrenamiento</button>
+          <button type="button" name="button" id="empezar" onclick="empezarCero()">Empezar de 0</button>
+        </form>
       </div>
   </body>
   {% block funcionalidad %}{% endblock %}

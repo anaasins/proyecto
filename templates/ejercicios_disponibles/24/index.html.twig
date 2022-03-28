@@ -9,7 +9,6 @@
     }
   </style>
 {% endblock %}
-{% block puntos %}{% endblock %}
 {% block juego %}
   <img src="/img/ejercicios/editada.jpg" id="elejida" class="principal">
   <br>
@@ -22,14 +21,18 @@
 {% endblock %}
 {% block funcionalidad %}
   <script type="text/javascript">
-    var parrafoPuntos;
-    var elejida;
-    var puntos;
+    var parrafoPuntos, parrafoNivel, inputNivel, inputPuntos;
+    var puntos, nivel;
 
     function load() {
-      puntos = 0;
       parrafoPuntos = document.getElementById('puntos');
-      parrafoPuntos.innerHTML=puntos;
+      inputPuntos = document.getElementById('inputPuntos');
+      puntos = parrafoPuntos.innerHTML;
+      inputPuntos.value = puntos;
+      parrafoNivel = document.getElementById('nivel');
+      inputNivel = document.getElementById('inputNivel');
+      nivel = parrafoNivel.innerHTML;
+      inputNivel.value = nivel;
       elejida = document.getElementById('elejida');
     }
 
@@ -37,9 +40,27 @@
       console.log(ev.target.src);
       if (ev.target.src == elejida.src) {
         puntos ++;
-        parrafoPuntos.innerHTML=puntos;
+        nivel ++;
+        actualizarPuntos();
+        actualizarNivel();
         //cambiar imagenes
       }
+    }
+
+    function actualizarPuntos() {
+      parrafoPuntos.innerHTML=puntos;
+      inputPuntos.value = puntos;
+    }
+    function actualizarNivel() {
+      parrafoNivel.innerHTML = nivel;
+      inputNivel.value = nivel;
+    }
+
+    function empezarCero() {
+      puntos = 0;
+      nivel = 0;
+      actualizarNivel();
+      actualizarPuntos();
     }
   </script>
 {% endblock %}
