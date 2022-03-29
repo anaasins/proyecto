@@ -31,7 +31,7 @@ class EjercicioController extends AbstractController
     }
 
     #[Route('/newGame', name: 'newGame_page')]
-    public function newGameAction(ManagerRegistry $doctrine,
+    public function newGameAction(EntityManagerInterface $entityManager,
                                   Request $request,
                                   EjercicioRepository $ejercicioRepository,
                                   MailerInterface $mailer): Response
@@ -43,19 +43,48 @@ class EjercicioController extends AbstractController
         $form = $this->createForm(EjercicioType::class, $ejercicio);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() && !is_null($request)){
+          // me guardo el id del ejercicio
+          $rand = rand(1, 99999);
           //coger imagen y cambiar nombre y guardarla en el repositorio correspondiente
           $file = $form['imagen']->getData();
-          $extension = $file->guessExtension();
-          if (!$extension) {
-            $extension = 'bin';
+          $imgextension = $file->guessExtension();
+          if (!$imgextension) {
+            $imgextension = 'bin';
           }
-          $imgName =  rand(1, 99999).'.'.$extension;
+          $imgName =  $rand.'.'.$imgextension;
           $file->move("img/ejercicios/", $imgName);
+          //Coger el documento de codigo
+          $filesystem = new Filesystem();
+          $file = $form['documento']->getData();
+          $extension = $file->guessExtension();
+          if ($extension=='html') {
+            $fileName = 'index.html.twig';
+            //creo la carpeta donde debe ir el ejercicio, si no existe
+            if(!$filesystem->exists('../templates/ejercicios_disponibles/'.$rand)){
+              $filesystem -> mkdir('../templates/ejercicios_disponibles/'.$rand);
+            }
+            $file -> move('../templates/ejercicios_disponibles/'.$rand.'/', $fileName);
+          }
+
+          //Procesar los documentos extra.
+          $extras = $form['documentosExtra']->getData();
+          $extrasD =array();
+          for ($i=0; $i < count($extras); $i++) {
+            $file = $extras[$i];
+            $fileName = $file->getClientOriginalName();
+            if(!$filesystem->exists('extras_ejercicios/'.$rand)){
+              $filesystem -> mkdir('extras_ejercicios/'.$rand);
+            }
+            $file -> move('extras_ejercicios/'.$rand.'/', $fileName);
+            array_push($extrasD, $fileName);
+          }
+
+          $ejercicio -> setDocumentosExtra($extrasD);
+
           //coger usuario con la sesion iniciada
           $user = $this->getUser();
-          $em = $doctrine->getManager();
           //añadir los datos del form al objeto ejercicio
-          $ejercicio = $form->getData();
+          //$ejercicio = $form->getData();
           //cambiar o añadir los datos que sean necesarios del objeto ejercicio
           $ejercicio->setAutor($user);
           $ejercicio->setFechaCreacion(new \DateTime('@'.strtotime('now')));
@@ -63,14 +92,34 @@ class EjercicioController extends AbstractController
           $ejercicio->setFechaRevision(null);
           $ejercicio->setAceptado(false);
           $ejercicio->setDisponible(false);
-          //TODO --> ver como guardo el codigo en un documento o si lo cambio par que suban ellos el documento
           $ejercicio->setDocumento('documento');
-          $ejercicio->setImagen($imgName);
-
+          $ejercicio->setImagen('img');
+          $ejercicio->setExtras(' ');
+          if ($form['niveles_disponibles']->getData() == null ||  $form['niveles_disponibles']->getData() == '' ) {
+            $ejercicio->setNivelesDisponibles(0);
+          }
             //guardo el objeto ejercicio en la base de datos
-           $em->persist($ejercicio);
-           $em->flush();
-           //TODO -> mandar correo al admin
+          $entityManager->persist($ejercicio);
+          $entityManager->flush();
+          //recojo el id del ejercicio que acabo de crear
+          $id = $ejercicio -> getId();
+          //cambio los nombres de la carpeta de src y de la imagen del ejercicio
+          if ($filesystem -> exists("img/ejercicios/".$imgName)){
+            $filesystem -> rename("img/ejercicios/".$imgName, "img/ejercicios/".$id.".".$imgextension);
+            $ejercicio->setImagen($id.".".$imgextension);
+          }
+          if ($filesystem -> exists('../templates/ejercicios_disponibles/'.$rand)){
+            $filesystem -> rename('../templates/ejercicios_disponibles/'.$rand, '../templates/ejercicios_disponibles/'.$id);
+            $ejercicio->setDocumento('/ejercicios_disponibles/'.$id);
+          }
+          if ($filesystem -> exists('extras_ejercicios/'.$rand)){
+            $filesystem -> rename('extras_ejercicios/'.$rand, 'extras_ejercicios/'.$id);
+          }
+          //actualizo con los nuevos nombres de imagen y archivo
+          $entityManager->persist($ejercicio);
+          $entityManager->flush();
+
+          //TODO -> mandar correo al admin
            /*$email = (new Email())
                       ->from('asinsanna@gmail.com')
                       ->to('aasins97@gmail.com')
@@ -79,7 +128,7 @@ class EjercicioController extends AbstractController
            $mailer->send($email);*/
            //redirijo al usuario a la pagina de ejercicios
 
-           return $this->redirectToRoute('myGames_page');
+          return $this->render('prueba/prueba.html.twig');
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form]);
     }

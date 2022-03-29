@@ -18,16 +18,29 @@ class EjercicioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nombre')
-            ->add('descripcion', TextareaType::class)
+            ->add('nombre', TextType::class, ['label' => 'Título del ejercicio'])
+            ->add('descripcion', TextareaType::class, ['help' => 'Una breve descripcion donde explicas en que consiste el juego, como ayuda a la vista, etc.'])
+            ->add('instrucciones', TextareaType::class, ['help' => 'Explica como empezar el juego, como se ganan puntos, si se puede subir de nivel, etc.'])
             //->add('fecha_creacion')
             //->add('revisado')
             //->add('fecha_revision')
             //->add('aceptado')
             ///->add('disponible')
-            ->add('documento', CKEditorType::class)
-            ->add('imagen', FileType::class)
-            ->add('niveles_disponibles', IntegerType::class, ['label' => 'Número de niveles disponibles'])
+            ->add('documento', FileType::class, [ 'label' => 'Documento principal',
+                                                  'multiple' => false,
+                                                  'help' => 'Aquí debes subir la plantilla que te has descargado actualizada con tu ejercicio implementado.'
+                                                ])
+            ->add('imagen', FileType::class, ['label' => 'Imagen de portada',
+                                              'multiple' => false
+                                             ])
+             ->add('documentosExtra', FileType::class, [ 'label' => 'Archivos extra',
+                                               'multiple' => true,
+                                               'required' => false,
+                                               'help' => 'Aquí puedes subir otros archivos o imagenes necesarios para le funcionamiento del ejercicio.'
+                                             ])
+            ->add('niveles_disponibles', IntegerType::class, ['label' => 'Número de niveles disponibles',
+                                                              'required' => false,
+                                                             ])
           //  ->add('autor')
             ->add('enviar', SubmitType::class, ['label' => 'Añadir']);
         ;

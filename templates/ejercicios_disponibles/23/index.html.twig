@@ -1,12 +1,13 @@
 {% extends 'entrenamiento.html.twig' %}
 {% block css %}
   <style media="screen">
-
+    canvas{
+      cursor: crosshair;
+    }
   </style>
 {% endblock %}
 {% block juego %}
-  <canvas id="canvas" width="1200" height="500" onclick="pulsado(event)" onload="canvasLoad()"></canvas>
-  <button type="button" name="button" onclick="empezarPartida()">Click para empezar</button>
+  <canvas id="canvas" width="1200" height="500" onclick="pulsado(event)" onload="canvasLoad()" onkeydown="empezarPartida()"></canvas>
 {% endblock %}
 {% block funcionalidad %}
   <script type="text/javascript">
@@ -16,6 +17,7 @@
     var requestID;
     var heigth, width;
     function load() {
+      document.addEventListener('keydown', empezarPartida);
       //no tocar
       parrafoPuntos = document.getElementById('puntos');
       inputPuntos = document.getElementById('inputPuntos');
@@ -63,7 +65,8 @@
     function muevePelota() {
       var time = new Date().getTime() * 0.002;
       ctx.clearRect(xPelota-22, yPelota-22, 60, 60);
-
+      console.log(arriba);
+      console.log(direccion);
       if(direccion=="iz"){
         xPelota-=Math.cos(radianes) * vel;
       }else {
@@ -75,22 +78,30 @@
         yPelota+= Math.sin(radianes) * vel;
       }
 
-      if(yPelota <= 30 || yPelota >= height-30){
+      if(yPelota <= 30){
         arriba = !arriba;
+        yPelota += 30;
+        grados = Math.random() * (180 - 0) + 0;
+        radianes = grados * Math.PI/180;
+      }else if (yPelota >= height-30) {
+        arriba = !arriba;
+        yPelota -= 30;
         grados = Math.random() * (180 - 0) + 0;
         radianes = grados * Math.PI/180;
       }else if(xPelota<=20){
         direccion="der";
+        xPelota += 20;
         grados = Math.random() * (180 - 0) + 0;
         radianes = grados * Math.PI/180;
       }else if (xPelota >= width-20) {
         direccion="iz";
+        xPelota -= 20;
         grados = Math.random() * (180 - 0) + 0;
         radianes = grados * Math.PI/180;
       }
-
       dibujarPelota();
     }
+    
     function pulsado(event) {
       var rect= canvas.getBoundingClientRect();
       var x=event.clientX - rect.left;
@@ -98,6 +109,7 @@
       if (x >= xPelota-20 && x <= xPelota+20 && y >= yPelota-20 && y <= yPelota+20) {
         console.log("acierto");
         actualizarPuntos(1);
+        arriba = !arriba;
         vel += 0.2;
         console.log(vel);
       }

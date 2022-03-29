@@ -52,6 +52,12 @@ class Ejercicio
     #[ORM\OneToMany(mappedBy: 'ejercicio', targetEntity: Entrenamiento::class, orphanRemoval: true)]
     private $entrenamientos;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $instrucciones;
+
+    #[ORM\Column(type: 'array', nullable: true)]
+    private $documentosExtra = [];
+
     public function __construct()
     {
         $this->entrenamientos = new ArrayCollection();
@@ -220,6 +226,30 @@ class Ejercicio
                 $entrenamiento->setEjercicio(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInstrucciones(): ?string
+    {
+        return $this->instrucciones;
+    }
+
+    public function setInstrucciones(?string $instrucciones): self
+    {
+        $this->instrucciones = $instrucciones;
+
+        return $this;
+    }
+
+    public function getDocumentosExtra(): ?array
+    {
+        return $this->documentosExtra;
+    }
+
+    public function setDocumentosExtra(?array $documentosExtra): self
+    {
+        $this->documentosExtra = $documentosExtra;
 
         return $this;
     }
