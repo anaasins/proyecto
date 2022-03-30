@@ -47,12 +47,14 @@ class EjercicioController extends AbstractController
           $rand = rand(1, 99999);
           //coger imagen y cambiar nombre y guardarla en el repositorio correspondiente
           $file = $form['imagen']->getData();
+          $imgPermitidas = array('bmp', 'gif', 'jpg', 'jpeg', 'tif', 'png');
           $imgextension = $file->guessExtension();
-          if (!$imgextension) {
+          if (!$imgextension || !in_array($imgextension, $imgPermitidas)) {
             $imgextension = 'bin';
           }
           $imgName =  $rand.'.'.$imgextension;
           $file->move("img/ejercicios/", $imgName);
+
           //Coger el documento de codigo
           $filesystem = new Filesystem();
           $file = $form['documento']->getData();
@@ -69,14 +71,19 @@ class EjercicioController extends AbstractController
           //Procesar los documentos extra.
           $extras = $form['documentosExtra']->getData();
           $extrasD =array();
+          $extrasPermitidos = array('bmp', 'gif', 'jpg', 'jpeg', 'tif', 'png', 'html', 'css', 'js');
           for ($i=0; $i < count($extras); $i++) {
             $file = $extras[$i];
             $fileName = $file->getClientOriginalName();
-            if(!$filesystem->exists('extras_ejercicios/'.$rand)){
-              $filesystem -> mkdir('extras_ejercicios/'.$rand);
+            $extension = $file->guessExtension();
+            if(in_array($extension, $extrasPermitidos))
+            {
+              if(!$filesystem->exists('extras_ejercicios/'.$rand)){
+                $filesystem -> mkdir('extras_ejercicios/'.$rand);
+              }
+              $file -> move('extras_ejercicios/'.$rand.'/', $fileName);
+              array_push($extrasD, $fileName);
             }
-            $file -> move('extras_ejercicios/'.$rand.'/', $fileName);
-            array_push($extrasD, $fileName);
           }
 
           $ejercicio -> setDocumentosExtra($extrasD);
