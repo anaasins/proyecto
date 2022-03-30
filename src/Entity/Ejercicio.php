@@ -52,7 +52,7 @@ class Ejercicio
     #[ORM\OneToMany(mappedBy: 'ejercicio', targetEntity: Entrenamiento::class, orphanRemoval: true)]
     private $entrenamientos;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 1024, nullable: true)]
     private $instrucciones;
 
     #[ORM\Column(type: 'array', nullable: true)]

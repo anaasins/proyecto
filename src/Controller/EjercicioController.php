@@ -94,7 +94,6 @@ class EjercicioController extends AbstractController
           $ejercicio->setDisponible(false);
           $ejercicio->setDocumento('documento');
           $ejercicio->setImagen('img');
-          $ejercicio->setExtras(' ');
           if ($form['niveles_disponibles']->getData() == null ||  $form['niveles_disponibles']->getData() == '' ) {
             $ejercicio->setNivelesDisponibles(0);
           }
@@ -128,7 +127,8 @@ class EjercicioController extends AbstractController
            $mailer->send($email);*/
            //redirijo al usuario a la pagina de ejercicios
 
-          return $this->render('prueba/prueba.html.twig');
+          //return $this->render('prueba/prueba.html.twig');
+          return $this->redirectToRoute('myGames_page');
         }
         return $this->renderForm('ejercicio/anyadir.html.twig', ['form'=>$form]);
     }
@@ -257,5 +257,68 @@ class EjercicioController extends AbstractController
       }
       return $this->redirectToRoute('gamesReview_page');
       //return $this->render('prueba/prueba.html.twig');
+    }
+
+    #[Route('/descargarPlantilla', name: 'app_descargarPlantilla')]
+    public function descargarPlantillaAction(): Response
+    {
+      $fileName = basename('index.html.twig');
+      $filePath = 'plantilla/'.$fileName;
+      if(!empty($fileName) && file_exists($filePath)){
+          // Define headers
+          header("Cache-Control: public");
+          header("Content-Description: File Transfer");
+          header("Content-Disposition: attachment; filename=$fileName");
+          header("Content-Type: application/zip");
+          header("Content-Transfer-Encoding: binary");
+
+          // Read the file
+          readfile($filePath);
+          exit;
+      }else{
+          echo 'The file does not exist.';
+      }
+    }
+
+    #[Route('/descargarEjemploCanvas', name: 'app_descargarEjemploCanvas')]
+    public function descargarCanvasAction(): Response
+    {
+      $fileName = basename('ejemploCanvas.html.twig');
+      $filePath = 'plantilla/'.$fileName;
+      if(!empty($fileName) && file_exists($filePath)){
+          // Define headers
+          header("Cache-Control: public");
+          header("Content-Description: File Transfer");
+          header("Content-Disposition: attachment; filename=$fileName");
+          header("Content-Type: application/zip");
+          header("Content-Transfer-Encoding: binary");
+
+          // Read the file
+          readfile($filePath);
+          exit;
+      }else{
+          echo 'The file does not exist.';
+      }
+    }
+
+    #[Route('/descargarEjemploDiv', name: 'app_descargarEjemploDiv')]
+    public function descargarDivAction(): Response
+    {
+      $fileName = basename('ejemploDiv.html.twig');
+      $filePath = 'plantilla/'.$fileName;
+      if(!empty($fileName) && file_exists($filePath)){
+          // Define headers
+          header("Cache-Control: public");
+          header("Content-Description: File Transfer");
+          header("Content-Disposition: attachment; filename=$fileName");
+          header("Content-Type: application/zip");
+          header("Content-Transfer-Encoding: binary");
+
+          // Read the file
+          readfile($filePath);
+          exit;
+      }else{
+          echo 'The file does not exist.';
+      }
     }
 }

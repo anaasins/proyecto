@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+{% block tips %}{% endblock %}
   <head>
     <link rel="stylesheet" href="/css/entrenamiento.css">
   {% block css %}{% endblock %}
@@ -22,43 +23,12 @@
           <button type="button" name="button" id="empezar" onclick="empezarCero()">Empezar de 0</button>
         </form>
   </body>
+  {% block funcionalidad %}{% endblock %}
   <script type="text/javascript">
-    var parrafoPuntos, parrafoNivel, inputNivel, inputPuntos;
-    var puntos, nivel;
-
-    function load() {
-      //no tocar
-      parrafoPuntos = document.getElementById('puntos');
-      inputPuntos = document.getElementById('inputPuntos');
-      puntos = parrafoPuntos.innerHTML;
-      inputPuntos.value = puntos;
-      parrafoNivel = document.getElementById('nivel');
-      inputNivel = document.getElementById('inputNivel');
-      nivel = parrafoNivel.innerHTML;
-      inputNivel.value = nivel;
-    }
-
-    //no tocar
-    function actualizarPuntos(p) {
-      puntos = parseInt(puntos) + p;
-      parrafoPuntos.innerHTML=puntos;
-      inputPuntos.value = puntos;
-    }
-    //no tocar
-    function actualizarNivel(n) {
-      nivel = parseInt(nivel) + n
-      parrafoNivel.innerHTML = nivel;
-      inputNivel.value = nivel;
-    }
-    //no tocar
-    function empezarCero() {
-      puntos = 0;
-      nivel = 0;
-      parrafoPuntos.innerHTML=puntos;
-      inputPuntos.value = puntos;
-      parrafoNivel.innerHTML = nivel;
-      inputNivel.value = nivel;
+  var canvas = document.getElementById('canvas');
+  console.log(canvas);
+    if (canvas) {
+      document.getElementById('botones').style.position = 'relative';
     }
   </script>
-  {% block funcionalidad %}{% endblock %}
 </html>

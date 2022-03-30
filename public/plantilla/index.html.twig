@@ -1,29 +1,25 @@
 {% extends 'entrenamiento.html.twig' %}
-{% block tips %}
-  <!--  TIPS
-        1. Para archivos / imagenes extra necesarios para el funcionamiento del ejercicio, el src debe ser:
-            src = "/extras_ejercicios/{{ejercicio.id}}/nombreArchivo"
 
-        2. El CSS y JS debe añadirse en este mismo archivo siempre que sea posible.
-           En caso contrario, indicar el src como explica el punto 1 y adjuntar dichos archivos al campo de Documentos extra del formulario.
+<!--  TIPS
+      1. Para archivos / imagenes extra necesarios para el funcionamiento del ejercicio, el src debe ser:
+          src = "/extras_ejercicios/{{ejercicio.id}}/nombreArchivo"
 
-        3. Respetar las instrucciones y los tips de este documento para un correcto funcionamiento de los ejercicios.
+      2. El CSS y JS debe añadirse en este mismo archivo siempre que sea posible.
+         En caso contrario, indicar el src como explica el punto 1 y adjuntar dichos archivos al campo de Documentos extra del formulario.
 
-        4. En caso de duda:
-            - Descargar y ver los ejercicios de ejemplo subidos
-            - Contactar con el administrador a traves del formulario de contacto.
-  -->
-{% endblock %}
+      3. Respetar las instrucciones y los tips de este documento para un correcto funcionamiento de los ejercicios.
+
+      4. En caso de duda:
+          - Descargar y ver los ejercicios de ejemplo subidos
+          - Contactar con el administrador a traves del formulario de contacto.
+-->
+
 {% block css %}
   <!--
       Dentro de este bloque puedes añadir css adicional a tu ejercicio si lo deseas.
   -->
   <style media="screen">
-    img{
-      height: 15%;
-      width: 15%;
-      margin:10px;
-    }
+
   </style>
 {% endblock %}
 {% block juego %}
@@ -36,16 +32,8 @@
   -->
 
   <!-- Elige la opción que más se adapte a tú desarrollo y elimina o comenta la que no vayas a utilizar -->
-   <div id="juego">
-     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" id="elejida" class="principal">
-     <br>
-     <br>
-     <br>
-     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
-   </div>
+   <canvas id="canvas" width="1200" height="500"></canvas>
+   <div id="juego"> </div>
 {% endblock %}
 {% block funcionalidad %}
   <!--
@@ -55,8 +43,6 @@
   <script type="text/javascript">
   var parrafoPuntos, parrafoNivel, inputNivel, inputPuntos;
   var puntos, nivel;
-  //mis variables
-  var elejida;
 
   /*
   * Función llamada en el evento onload adherido al body.
@@ -76,7 +62,7 @@
 
     //Aquí puedes añadir le código que consideres necesario para tu ejercicio.
     //Un ejemplo es inicializar el canvas, variables, etc.
-    elejida = document.getElementById('elejida');
+
   }
 
   /*
@@ -122,15 +108,8 @@
     // ej. Volver a cargar la página, resetear variables, etc.
   }
 
-  //Añade a partir de aqui nuevas funciones para el funcionamiento de tu ejercicio.
-  function comprobar(ev) {
-    console.log(ev.target.src);
-    if (ev.target.src == elejida.src) {
-      actualizarPuntos(1);
-      actualizarNivel(1);
-      //cambiar imagenes
-    }
-  }
+  //Añade a partir de aquí nuevas funciones para el desarrollo de tu ejercicio.
+
 
   </script>
 {% endblock %}
