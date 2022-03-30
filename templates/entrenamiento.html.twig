@@ -22,6 +22,12 @@
           <button type="submit" name="button" id="acabar">Acabar entrenamiento</button>
           <button type="button" name="button" id="empezar" onclick="empezarCero()">Empezar de 0</button>
         </form>
+        <div id="instruccionesDiv">
+          <fieldset>
+            <legend>Instrucciones del juego:</legend>
+            <p>{{ejercicio.instrucciones}}</p>
+          </fieldset>
+        </div>
   </body>
   {% block funcionalidad %}{% endblock %}
   <script type="text/javascript">
@@ -29,6 +35,7 @@
   console.log(canvas);
     if (canvas) {
       document.getElementById('botones').style.position = 'relative';
+      document.getElementById('instruccionesDiv').style.position = 'relative';
     }
   </script>
 </html>

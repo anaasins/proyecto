@@ -56,3 +56,19 @@ canvas{
 #empezar{
   background-color: red;
 }
+
+#instruccionesDiv{
+  top: 500px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1%;
+  margin-bottom: 15%;
+}
+
+fieldset{
+  border-color: crimson;
+  border-width: 5px;
+}
+legend{
+  font-weight: bolder;
+}
