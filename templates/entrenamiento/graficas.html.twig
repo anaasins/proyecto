@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Pagina personal
+{% endblock %}
+
+{% block stylesheets %}
+  <style media="screen" type="text/css">
+    #grafica{
+      margin: 5%;
+      max-width: 90%;
+      margin-top: inherit;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <section class="px-5 text-center" id="grafica">
+  <div class="container px-5 my-5">
+      <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-6">
+              <div class="text-center">
+                  <h2 class="fw-bolder">Consulta aquí las gráficas de evolución de tus entrenamientos.</h2>
+                  <p class="lead fw-normal text-muted mb-5">Selecciona el ejercicio que desees consultar:</p>
+                  <select class="" name="">
+                    {% for entr in entrenamiento %}
+                      <option value=""><a>{{entr.nombre}}<a></option>
+                    {% endfor %}
+                  </select>
+              </div>
+          </div>
+      </div>
+    <canvas id="canvas"></canvas>
+  </section>
+{% endblock %}
+{% block javascripts %}
+  <script type="text/javascript">
+    // Obtener una referencia al elemento canvas del DOM
+    const $grafica = document.querySelector("#canvas");
+    // Las etiquetas son las que van en el eje X.
+    const etiquetas = ["Fecha 1", "Fecha 2", "Fecha 3", "Fecha 4"]
+    // Podemos tener varios conjuntos de datos. Comencemos con uno
+    const datosVentas2020 = {
+      label: "Puntuacion juego X",
+      data: [5000, 1500, 8000, 5102], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+      backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
+      borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+      borderWidth: 1,// Ancho del borde
+    };
+    const niveles = {
+      label: "Niveles juego X",
+      data: [4010, 2510, 6010, 8012], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+      backgroundColor: 'rgba(245, 54, 39, 0.2)', // Color de fondo
+      borderColor: 'rgba(245, 54, 39, 1)', // Color del borde
+      borderWidth: 1,// Ancho del borde
+    };
+    new Chart($grafica, {
+        type: 'line',// Tipo de gráfica
+        data: {
+            labels: etiquetas,
+            datasets: [
+                datosVentas2020,
+                niveles,
+                // Aquí más datos...
+            ]
+        },
+        options: {
+            responsive: true
+        }
+    });
+  </script>
+{% endblock %}

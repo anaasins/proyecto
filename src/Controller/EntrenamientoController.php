@@ -47,4 +47,25 @@ class EntrenamientoController extends AbstractController
 
     return $this->redirectToRoute('games_page');
   }
+
+  #[Route('/graficas', name: 'graficas_page')]
+  public function graficasAction(EntityManagerInterface $entityManager): Response
+  {
+    $this->denyAccessUnlessGranted('ROLE_USER');
+
+      $user= $this->getUser();
+      $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
+      $entrenamiento = $entrenamientoRepository->findBy(array('usuario' => $user->getId() ), array('id'=>'ASC'));
+      // TODO --> Hacer un array de nombres de ejercicios comprobando antes que no esta.
+      $ejercicios = array();
+      for ($i=0; $i < count($entrenamiento); $i++) {
+        if (!in_array($entrenamiento[$i]->getEjercicio(), $ejercicios)) {
+          array_push($ejercicios, $entrenamiento[$i]->getEjercicio());
+        }
+      }
+//      var_dump($entrenamiento);
+      //$ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$id));
+      return $this->render('entrenamiento/graficas.html.twig', array('entrenamiento' => $ejercicios));
+      //return $this->render('prueba/prueba.html.twig');
+  }
 }
