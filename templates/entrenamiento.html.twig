@@ -31,9 +31,8 @@
   </body>
   {% block funcionalidad %}{% endblock %}
   <script type="text/javascript">
-  var canvas = document.getElementById('canvas');
-  console.log(canvas);
-    if (canvas) {
+    var canvas = document.getElementsByTagName('canvas');
+    if (canvas.length > 0) {
       document.getElementById('botones').style.position = 'relative';
       document.getElementById('instruccionesDiv').style.position = 'relative';
     }

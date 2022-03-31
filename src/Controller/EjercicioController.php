@@ -86,7 +86,7 @@ class EjercicioController extends AbstractController
             }
           }
 
-          $ejercicio -> setDocumentosExtra($extrasD);
+          $ejercicio->setDocumentosExtra($extrasD);
 
           //coger usuario con la sesion iniciada
           $user = $this->getUser();
