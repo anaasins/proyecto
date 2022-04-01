@@ -29,25 +29,24 @@
                       <li class="nav-item"><a class="nav-link" href="{{ path('games_page') }}">Entrenar</a></li>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                           <li class="nav-item"><a class="nav-link" href="{{ path('newGame_page') }}">Añadir ejercicio</a></li>
-                          <li class="nav-item"><a class="nav-link" href="{{ path('profile_page') }}">Mi perfil</a></li>
                           {% if is_granted('ROLE_ADMIN') %}
                           <li class="nav-item"><a class="nav-link" href="{{ path('gamesReview_page') }}">Revisar ejercicios</a></li>
                           {% endif %}
-                          <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Logout</a></li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="{{ path('profile_page') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                  <li><a class="dropdown-item" href="{{ path('app_updateUser') }}">Datos personales</a></li>
+                                  <li><a class="dropdown-item" href="{{ path('app_changePass') }}">Cambiar contraseña</a></li>
+                                  <li><a class="dropdown-item" href="{{ path('graficas_page', {id: 0}) }}">Gráficas</a></li>
+                                  <li><a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar sesion </a></li>
+                              </ul>
+                          </li>
                         {% else %}
-                          <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Login</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Iniciar sesión</a></li>
                         {% endif %}
 
 
-                          <!--<li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="{{ path('profile_page') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mi perfil</a>
-                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                  <li><a class="dropdown-item" href="#">Datos personales</a></li>
-                                  <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
-                                  <li><a class="dropdown-item" href="#">Gráficas</a></li>
-                                  <li><a class="dropdown-item" href="#">Cerrar sesion</a></li>
-                              </ul>
-                          </li>-->
+
                           <!--  <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
