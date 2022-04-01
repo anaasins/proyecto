@@ -48,24 +48,40 @@ class EntrenamientoController extends AbstractController
     return $this->redirectToRoute('games_page');
   }
 
-  #[Route('/graficas', name: 'graficas_page')]
-  public function graficasAction(EntityManagerInterface $entityManager): Response
+  #[Route('/graficas/{id}', name: 'graficas_page')]
+  public function graficasAction(int $id=0, EntityManagerInterface $entityManager): Response
   {
     $this->denyAccessUnlessGranted('ROLE_USER');
 
       $user= $this->getUser();
       $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
-      $entrenamiento = $entrenamientoRepository->findBy(array('usuario' => $user->getId() ), array('id'=>'ASC'));
+      $entrenamientos = $entrenamientoRepository->findBy(array('usuario' => $user->getId() ), array('id'=>'ASC'));
       // TODO --> Hacer un array de nombres de ejercicios comprobando antes que no esta.
       $ejercicios = array();
-      for ($i=0; $i < count($entrenamiento); $i++) {
-        if (!in_array($entrenamiento[$i]->getEjercicio(), $ejercicios)) {
-          array_push($ejercicios, $entrenamiento[$i]->getEjercicio());
+      for ($i=0; $i < count($entrenamientos); $i++) {
+        if (!in_array($entrenamientos[$i]->getEjercicio(), $ejercicios)) {
+          array_push($ejercicios, $entrenamientos[$i]->getEjercicio());
         }
       }
-//      var_dump($entrenamiento);
-      //$ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$id));
-      return $this->render('entrenamiento/graficas.html.twig', array('entrenamiento' => $ejercicios));
+      $fechas = array();
+      $puntuaciones = array();
+      $niveles = array();
+      $datos=null;
+      if ($id!=0) {
+        $datos = $entrenamientoRepository -> findBy(array('usuario' => $user->getId(), 'ejercicio' => $id), array('id'=>'ASC'));
+        for ($i=0; $i < count($datos); $i++) {
+          array_push($fechas, $datos[$i]->getFecha()->format('d-m-Y'));
+          array_push($puntuaciones, $datos[$i]->getPuntuacion());
+          array_push($niveles, $datos[$i]->getNivelAlcanzado());
+        }
+      }
+
+      return $this->render('entrenamiento/graficas.html.twig', array('ejercicios' => $ejercicios,
+                                                                      'datos' => $datos,
+                                                                      'fechas' => $fechas,
+                                                                      'puntuaciones' => $puntuaciones,
+                                                                      'niveles' => $niveles
+                                                                    ));
       //return $this->render('prueba/prueba.html.twig');
   }
 }

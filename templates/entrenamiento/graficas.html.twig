@@ -3,7 +3,12 @@
 {% block title %}
 Pagina personal
 {% endblock %}
-
+{% block baseStyleSheet %}
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="../css/styles.css" rel="stylesheet" />
+{% endblock %}
 {% block stylesheets %}
   <style media="screen" type="text/css">
     #grafica{
@@ -20,11 +25,18 @@ Pagina personal
       <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
               <div class="text-center">
-                  <h2 class="fw-bolder">Consulta aquí las gráficas de evolución de tus entrenamientos.</h2>
+                  <h2 class="fw-bolder">Gráficas de evolución.</h2>
                   <p class="lead fw-normal text-muted mb-5">Selecciona el ejercicio que desees consultar:</p>
-                  <select class="" name="">
-                    {% for entr in entrenamiento %}
-                      <option value=""><a>{{entr.nombre}}<a></option>
+                  <select class="" name="" onchange='location = this.value;'>
+                    {% if datos is null %}
+                      <option value="" selected>Seleccione</option>
+                    {% endif %}
+                    {% for ejer in ejercicios %}
+                      {% if datos is not null and ejer.id == datos.0.ejercicio.id %}
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}" selected>{{ejer.nombre}}</option>
+                      {% else %}
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}">{{ejer.nombre}}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
               </div>
@@ -33,23 +45,28 @@ Pagina personal
     <canvas id="canvas"></canvas>
   </section>
 {% endblock %}
+{% block baseJS %}
+  <!-- Core theme JS-->
+  <script src="../js/scripts.js"></script>
+{% endblock %}
 {% block javascripts %}
   <script type="text/javascript">
+    var nombreEjercicio
     // Obtener una referencia al elemento canvas del DOM
     const $grafica = document.querySelector("#canvas");
     // Las etiquetas son las que van en el eje X.
-    const etiquetas = ["Fecha 1", "Fecha 2", "Fecha 3", "Fecha 4"]
+    const etiquetas = JSON.parse('{{ fechas | json_encode | raw }}');
     // Podemos tener varios conjuntos de datos. Comencemos con uno
     const datosVentas2020 = {
-      label: "Puntuacion juego X",
-      data: [5000, 1500, 8000, 5102], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+      label: "Puntuacion ejercicio",
+      data: JSON.parse('{{ puntuaciones | json_encode | raw }}'), // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
       backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
       borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
       borderWidth: 1,// Ancho del borde
     };
     const niveles = {
-      label: "Niveles juego X",
-      data: [4010, 2510, 6010, 8012], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+      label: "Niveles ejercicio",
+      data: JSON.parse('{{ niveles | json_encode | raw }}'), // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
       backgroundColor: 'rgba(245, 54, 39, 0.2)', // Color de fondo
       borderColor: 'rgba(245, 54, 39, 1)', // Color del borde
       borderWidth: 1,// Ancho del borde
