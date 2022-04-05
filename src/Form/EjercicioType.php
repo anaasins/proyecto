@@ -53,7 +53,7 @@ class EjercicioType extends AbstractType
                                                               'help' => 'Si la dificultad del ejercicio se rige por niveles, indica aquí de cuantos dispone.'
                                                              ])
           //  ->add('autor')
-            ->add('enviar', SubmitType::class, ['label' => 'Añadir']);
+            ->add('enviar', SubmitType::class, ['label' => 'Añadir ejercicio']);
         ;
     }
 

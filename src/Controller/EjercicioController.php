@@ -159,6 +159,8 @@ class EjercicioController extends AbstractController
     #[Route('/cambiarDisponible/{id}', name: 'app_cambiarDisponible')]
     public function cambiarDisponibleAction(int $id, EntityManagerInterface $entityManager): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+      
       $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $disponible = $ejercicio -> getDisponible();
       $ejercicio -> setDisponible(!$disponible);
@@ -184,6 +186,8 @@ class EjercicioController extends AbstractController
     #[Route('/aceptarejercicio/{id}', name: 'app_aceptarEjercicio')]
     public function aceptarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
       $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $aceptado = $ejercicio -> getAceptado();
       $ejercicio -> setAceptado(true);
@@ -196,6 +200,8 @@ class EjercicioController extends AbstractController
     #[Route('/denegarejercicio/{id}', name: 'app_denegarEjercicio')]
     public function denegarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
       $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $aceptado = $ejercicio -> getAceptado();
       $ejercicio -> setAceptado(false);
@@ -208,6 +214,8 @@ class EjercicioController extends AbstractController
     #[Route('/revisarEjercicio/{id}', name: 'app_revisarEjercicio')]
     public function revisarEjercicioAction(int $id, EntityManagerInterface $entityManager): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
       /*$ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $imagen = $ejercicio -> getImagen();
       $imagenPath = "img/ejercicios/".$imagen;
@@ -269,6 +277,8 @@ class EjercicioController extends AbstractController
     #[Route('/descargarPlantilla', name: 'app_descargarPlantilla')]
     public function descargarPlantillaAction(): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+
       $fileName = basename('index.html.twig');
       $filePath = 'plantilla/'.$fileName;
       if(!empty($fileName) && file_exists($filePath)){
@@ -290,6 +300,8 @@ class EjercicioController extends AbstractController
     #[Route('/descargarEjemploCanvas', name: 'app_descargarEjemploCanvas')]
     public function descargarCanvasAction(): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+
       $fileName = basename('ejemploCanvas.html.twig');
       $filePath = 'plantilla/'.$fileName;
       if(!empty($fileName) && file_exists($filePath)){
@@ -311,6 +323,8 @@ class EjercicioController extends AbstractController
     #[Route('/descargarEjemploDiv', name: 'app_descargarEjemploDiv')]
     public function descargarDivAction(): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+
       $fileName = basename('ejemploDiv.html.twig');
       $filePath = 'plantilla/'.$fileName;
       if(!empty($fileName) && file_exists($filePath)){

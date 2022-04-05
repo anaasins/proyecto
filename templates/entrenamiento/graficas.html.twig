@@ -33,9 +33,9 @@ Pagina personal
                     {% endif %}
                     {% for ejer in ejercicios %}
                       {% if datos is not null and ejer.id == datos.0.ejercicio.id %}
-                        <option value="{{ path('graficas_page', {id: ejer.id}) }}" selected>{{ejer.nombre}}</option>
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}" selected>{{ejer.nombre}} - {{ejer.id}}</option>
                       {% else %}
-                        <option value="{{ path('graficas_page', {id: ejer.id}) }}">{{ejer.nombre}}</option>
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}">{{ejer.nombre}} - {{ejer.id}}</option>
                       {% endif %}
                     {% endfor %}
                   </select>

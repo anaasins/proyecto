@@ -125,6 +125,8 @@ class UsuarioController extends AbstractController
     #[Route('/update', name: 'app_update')]
     public function update(EntityManagerInterface $entityManager): Response
     {
+      $this->denyAccessUnlessGranted('ROLE_USER');
+      
       $user= $this->getUser();
       $user->setUltimoAcceso(new \DateTime('@'.strtotime('now')));
       $entityManager->persist($user);
