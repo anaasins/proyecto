@@ -17,34 +17,36 @@ class EntrenamientoController extends AbstractController
   #[Route('/entrenar/{id}', name: 'entrenar_page')]
   public function entrenarAction(int $id, EntityManagerInterface $entityManager): Response
   {
-    $this->denyAccessUnlessGranted('ROLE_USER');
-
       $user= $this->getUser();
-      $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
-      $entrenamiento = $entrenamientoRepository->findOneBy(array('usuario'=>$user->getId(), 'ejercicio'=>$id), array('id'=>'DESC'));
       $ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$id));
-      return $this->render('ejercicios_disponibles/'.$id.'/index.html.twig', array('entrenamiento' => $entrenamiento,
-                                                                                    'ejercicio' => $ejercicio
-                                                                                  ));
+      if ($user) {
+        $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
+        $entrenamiento = $entrenamientoRepository->findOneBy(array('usuario'=>$user->getId(), 'ejercicio'=>$id), array('id'=>'DESC'));
+        return $this->render('ejercicios_disponibles/'.$id.'/index.html.twig', array('entrenamiento' => $entrenamiento,
+                                                                                      'ejercicio' => $ejercicio
+                                                                                    ));
+      }else {
+        return $this->render('ejercicios_disponibles/'.$id.'/index.html.twig', array('ejercicio' => $ejercicio
+                                                                                    ));
+      }
   }
 
   #[Route('/guardarEntrenamiento', name: 'app_guardarEntrenamiento')]
   public function guardarEntrenamientoAction(EntityManagerInterface $entityManager): Response
   {
-    $this->denyAccessUnlessGranted('ROLE_USER');
-
-    $entrenamiento = new Entrenamiento();
     $user= $this->getUser();
-    $ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$_POST['ejercicio']));
+    if ($user) {
+      $entrenamiento = new Entrenamiento();
+      $ejercicio = $entityManager -> getRepository(Ejercicio::class)->findOneBy(array('id'=>$_POST['ejercicio']));
 
-    $entrenamiento -> setUsuario($user);
-    $entrenamiento -> setEjercicio($ejercicio);
-    $entrenamiento -> setFecha(new \DateTime('@'.strtotime('now')));
-    $entrenamiento -> setPuntuacion($_POST['puntos']);
-    $entrenamiento -> setNivelAlcanzado($_POST['nivel']);
-    $entityManager->persist($entrenamiento);
-    $entityManager->flush();
-
+      $entrenamiento -> setUsuario($user);
+      $entrenamiento -> setEjercicio($ejercicio);
+      $entrenamiento -> setFecha(new \DateTime('@'.strtotime('now')));
+      $entrenamiento -> setPuntuacion($_POST['puntos']);
+      $entrenamiento -> setNivelAlcanzado($_POST['nivel']);
+      $entityManager->persist($entrenamiento);
+      $entityManager->flush();
+    }
     return $this->redirectToRoute('games_page');
   }
 
