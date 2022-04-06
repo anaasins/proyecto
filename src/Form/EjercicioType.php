@@ -31,7 +31,7 @@ class EjercicioType extends AbstractType
             ->add('documento', FileType::class, [ 'label' => 'Documento principal',
                                                   'multiple' => false,
                                                   'help_html' => true,
-                                                  'help' => 'Aquí debes subir la plantilla que te has descargado actualizada con tu ejercicio implementado.
+                                                  'help' => 'Aquí debes subir la plantilla (index.html.twig) que te has descargado actualizada con tu ejercicio implementado.
                                                               <br>
                                                              Asegurate de haber seguido las instrucciones en ella durante la implementación del ejercicio.
                                                             '

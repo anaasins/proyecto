@@ -58,7 +58,6 @@ class EntrenamientoController extends AbstractController
       $user= $this->getUser();
       $entrenamientoRepository = $entityManager -> getRepository(Entrenamiento::class);
       $entrenamientos = $entrenamientoRepository->findBy(array('usuario' => $user->getId() ), array('id'=>'ASC'));
-      // TODO --> Hacer un array de nombres de ejercicios comprobando antes que no esta.
       $ejercicios = array();
       for ($i=0; $i < count($entrenamientos); $i++) {
         if (!in_array($entrenamientos[$i]->getEjercicio(), $ejercicios)) {

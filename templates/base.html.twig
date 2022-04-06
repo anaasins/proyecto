@@ -26,9 +26,9 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                       <li class="nav-item"><a class="nav-link" href="{{ path('home_page') }}">Inicio</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{{ path('newGame_page') }}">Añadir ejercicio</a></li>
                       <li class="nav-item"><a class="nav-link" href="{{ path('games_page') }}">Entrenar</a></li>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                          <li class="nav-item"><a class="nav-link" href="{{ path('newGame_page') }}">Añadir ejercicio</a></li>
                           {% if is_granted('ROLE_ADMIN') %}
                           <li class="nav-item"><a class="nav-link" href="{{ path('gamesReview_page') }}">Revisar ejercicios</a></li>
                           {% endif %}

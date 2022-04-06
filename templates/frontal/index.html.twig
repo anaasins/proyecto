@@ -11,11 +11,12 @@ Pagina principal
           <div class="row gx-5 align-items-center justify-content-center">
               <div class="col-lg-8 col-xl-7 col-xxl-6">
                   <div class="my-5 text-center text-xl-start">
-                      <h1 class="display-5 fw-bolder text-white mb-2">¡Entrenemos nuestra vista!</h1>
-                      <p class="lead fw-normal text-white-50 mb-4">Disponemos de una gran colección de entrenamientos destinados a entrenar tu salud visual.</p>
-                      <p class="lead fw-normal text-white-50 mb-4">Además... te damos la posibilidad de crear y añadir nuevos juegos para contribuir a ampliar la colección.</p>
+                      <h1 class="display-5 fw-bolder text-white mb-2">¡Entrenemos la vista!</h1>
+                      <p class="lead fw-normal text-white-50 mb-4">Crea y añade nuevos ejercicios visuales para ayudar a los demás.</p>
+                      <p class="lead fw-normal text-white-50 mb-4">También... entrena tu vista mediante la colección de ejercicios disponibles.</p>
                       <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                          <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#games">¡A entrenar!</a>
+                          <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#games">Entrenar</a>
+                          <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{ path('newGame_page') }}">Crear ejercicio</a>
                           <a class="btn btn-outline-light btn-lg px-4" href="#features">Saber más</a>
                       </div>
                   </div>
@@ -45,7 +46,7 @@ Pagina principal
                       <div class="col mb-5 mb-md-0 h-100">
                           <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-plus-square-fill"></i></div>
                           <h2 class="h5">Participa</h2>
-                          <p class="mb-0">Crea y añade nuevos entrenamientos mediante nuestro formulario, para contribuir a la gran colección disponible.</p>
+                          <p class="mb-0">Crea y añade nuevos ejercicios mediante nuestro formulario, para contribuir a la gran colección disponible.</p>
                       </div>
                       <div class="col h-100">
                           <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-graph-up"></i></div>
@@ -78,7 +79,8 @@ Pagina principal
                   <div class="card h-100 shadow border-0">
                       <img class="card-img-top" src="img/ejercicios/{{ejercicio.imagen}}" alt="Imagen portada ejercicio" />
                       <div class="card-body p-4">
-                          <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">{{ejercicio.nombre}}</h5></a>
+                          <!--<a class="text-decoration-none link-dark stretched-link" href=""></a>-->
+                          <h5 class="card-title mb-3">{{ejercicio.nombre}} - {{ejercicio.id}}</h5>
                           <p class="card-text mb-0">{{ejercicio.descripcion}}</p>
                       </div>
                       <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -90,10 +92,11 @@ Pagina principal
                                   </div>
                               </div>
                           </div>
+                          <div class="d-grid"><a class="btn btn-primary" href="{{ path('entrenar_page', {id: ejercicio.id}) }}">Entrenar</a></div>
                       </div>
                   </div>
               </div>
-            <!--acaba tarjeta-->
+            <!--Acaba tarjeta-->
           {% endfor %}
           </div>
       </div>

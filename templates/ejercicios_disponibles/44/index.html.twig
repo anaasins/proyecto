@@ -1,0 +1,136 @@
+{% extends 'entrenamiento.html.twig' %}
+{% block tips %}
+  <!--  TIPS
+        1. Para archivos / imagenes extra necesarios para el funcionamiento del ejercicio, el src debe ser:
+            src = "/extras_ejercicios/{{ejercicio.id}}/nombreArchivo"
+
+        2. El CSS y JS debe añadirse en este mismo archivo siempre que sea posible.
+           En caso contrario, indicar el src como explica el punto 1 y adjuntar dichos archivos al campo de Documentos extra del formulario.
+
+        3. Respetar las instrucciones y los tips de este documento para un correcto funcionamiento de los ejercicios.
+
+        4. En caso de duda:
+            - Descargar y ver los ejercicios de ejemplo subidos
+            - Contactar con el administrador a traves del formulario de contacto.
+  -->
+{% endblock %}
+{% block css %}
+  <!--
+      Dentro de este bloque puedes añadir css adicional a tu ejercicio si lo deseas.
+  -->
+  <style media="screen">
+    img{
+      height: 15%;
+      width: 15%;
+      margin:10px;
+    }
+  </style>
+{% endblock %}
+{% block juego %}
+  <!--
+      Hay dos opciones para añadir el ejercicio:
+        1. Utilizando un canvas.
+        2. Utilizando simplemente HTML y JS. Para esta opción, el HTML debe añadirse dentro de un div con el id=juego.
+      ** Ambas opciones tienen el css basico ya creado, por lo que, para el canvas es importante no cambiar los valores de width y height.
+      ** Las dos opciones estan creadas abajo, utiliza la que mejor se adapte a tu ejercicio y ELIMINA O COMENTA la opción no utilizada.
+  -->
+
+  <!-- Elige la opción que más se adapte a tú desarrollo y elimina o comenta la que no vayas a utilizar -->
+   <div id="juego">
+     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" id="elejida" class="principal">
+     <br>
+     <br>
+     <br>
+     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+     <img src="/extras_ejercicios/{{ejercicio.id}}/editada3.jpg" onclick="comprobar(event)" class="opciones">
+   </div>
+{% endblock %}
+{% block funcionalidad %}
+  <!--
+      Dentro de este bloque se debe añadir el JS necesario para tu ejercicio.
+      Como podrás observar, ya hay parte de codigo creado con ciertas instrucciones comentadas que se debe respetar para el correcto funcionamiento.
+  -->
+  <script type="text/javascript">
+  var parrafoPuntos, parrafoNivel, inputNivel, inputPuntos;
+  var puntos, nivel;
+  //mis variables
+  var elejida;
+
+  /*
+  * Función llamada en el evento onload adherido al body.
+  * Se llamará cuando el body esté completamente cargado, por lo que es el mejor momento para inicializar las variables.
+  */
+  function load() {
+    //Esta parte del codigo se encarga de recoger los puntos y el nivel anteriormente alcanzados por el usuario,
+    // por lo que no se debe modificar.
+    parrafoPuntos = document.getElementById('puntos');
+    inputPuntos = document.getElementById('inputPuntos');
+    puntos = parrafoPuntos.innerHTML;
+    inputPuntos.value = puntos;
+    parrafoNivel = document.getElementById('nivel');
+    inputNivel = document.getElementById('inputNivel');
+    nivel = parrafoNivel.innerHTML;
+    inputNivel.value = nivel;
+
+    //Aquí puedes añadir le código que consideres necesario para tu ejercicio.
+    //Un ejemplo es inicializar el canvas, variables, etc.
+    elejida = document.getElementById('elejida');
+  }
+
+  /*
+  * Funcion encargada de actualizar la puntuación.
+  * Debe llamarse cada vez que se quiera actualizar la puntuación, pasandole como parametro los puntos que deben sumarse.
+  * Si no se hace de esta forma, no se garantiza que los puntos alcanzados se almacenen en el perfil del usuario al finalizar el entrenamiento.
+  */
+  function actualizarPuntos(p) {
+    puntos = parseInt(puntos) + p;
+    parrafoPuntos.innerHTML=puntos;
+    inputPuntos.value = puntos;
+
+    // Aquí puedes añadir más funcionalidades si son necesarias para tu ejercicio.
+
+  }
+
+  /*
+  * Funcion encargada de actualizar el nivel actual.
+  * Debe llamarse cada vez que se quiera actualizar el nivel, pasandole como parametro los niveles que deben sumarse.
+  * Si no se hace de esta forma, no se garantiza que los niveles alcanzados se almacenen en el perfil del usuario al finalizar el entrenamiento.
+  */
+  function actualizarNivel(n) {
+    nivel = parseInt(nivel) + n
+    parrafoNivel.innerHTML = nivel;
+    inputNivel.value = nivel;
+
+    // Aquí puedes añadir más funcionalidades si son necesarias para tu ejercicio.
+  }
+
+  /*
+  * Funcion encargada de resetear el nivel y los puntos cuando se desee empezar de 0 el juego.
+  * Esta adherida al evento onclick del boton empezar de 0.
+  */
+  function empezarCero() {
+    puntos = 0;
+    nivel = 0;
+    parrafoPuntos.innerHTML=puntos;
+    inputPuntos.value = puntos;
+    parrafoNivel.innerHTML = nivel;
+    inputNivel.value = nivel;
+
+    // Aquí puede añadir más funcionalidades si son necesarias para tu ejercicio
+    // ej. Volver a cargar la página, resetear variables, etc.
+  }
+
+  //Añade a partir de aqui nuevas funciones para el funcionamiento de tu ejercicio.
+  function comprobar(ev) {
+    console.log(ev.target.src);
+    if (ev.target.src == elejida.src) {
+      actualizarPuntos(1);
+      actualizarNivel(1);
+      //cambiar imagenes
+    }
+  }
+
+  </script>
+{% endblock %}

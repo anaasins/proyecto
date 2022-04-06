@@ -61,12 +61,14 @@ class EjercicioController extends AbstractController
           $extension = $file->guessExtension();
           if ($extension=='html') {
             $fileName = 'index.html.twig';
-            //creo la carpeta donde debe ir el ejercicio, si no existe
-            if(!$filesystem->exists('../templates/ejercicios_disponibles/'.$rand)){
-              $filesystem -> mkdir('../templates/ejercicios_disponibles/'.$rand);
-            }
-            $file -> move('../templates/ejercicios_disponibles/'.$rand.'/', $fileName);
+          }else {
+            $fileName = 'index.bin';
           }
+          //creo la carpeta donde debe ir el ejercicio, si no existe
+          if(!$filesystem->exists('../templates/ejercicios_disponibles/'.$rand)){
+            $filesystem -> mkdir('../templates/ejercicios_disponibles/'.$rand);
+          }
+          $file -> move('../templates/ejercicios_disponibles/'.$rand.'/', $fileName);
 
           //Procesar los documentos extra.
           $extras = $form['documentosExtra']->getData();
@@ -96,7 +98,6 @@ class EjercicioController extends AbstractController
           $ejercicio->setAutor($user);
           $ejercicio->setFechaCreacion(new \DateTime('@'.strtotime('now')));
           $ejercicio->setRevisado(false);
-          $ejercicio->setFechaRevision(null);
           $ejercicio->setAceptado(false);
           $ejercicio->setDisponible(false);
           $ejercicio->setDocumento('documento');
@@ -160,7 +161,7 @@ class EjercicioController extends AbstractController
     public function cambiarDisponibleAction(int $id, EntityManagerInterface $entityManager): Response
     {
       $this->denyAccessUnlessGranted('ROLE_USER');
-      
+
       $ejercicio = $entityManager->getRepository(Ejercicio::class)->find($id);
       $disponible = $ejercicio -> getDisponible();
       $ejercicio -> setDisponible(!$disponible);

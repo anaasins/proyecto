@@ -31,9 +31,6 @@ class Ejercicio
     #[ORM\Column(type: 'boolean')]
     private $revisado;
 
-    #[ORM\Column(type: 'date', nullable: true)]
-    private $fecha_revision;
-
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $aceptado;
 
@@ -124,18 +121,6 @@ class Ejercicio
     public function setRevisado(bool $revisado): self
     {
         $this->revisado = $revisado;
-
-        return $this;
-    }
-
-    public function getFechaRevision(): ?\DateTimeInterface
-    {
-        return $this->fecha_revision;
-    }
-
-    public function setFechaRevision(?\DateTimeInterface $fecha_revision): self
-    {
-        $this->fecha_revision = $fecha_revision;
 
         return $this;
     }
