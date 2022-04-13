@@ -37,9 +37,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'date')]
     private $fecha_registro;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private $ultimo_acceso;
-
     #[ORM\ManyToOne(targetEntity: Rol::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     private $rol;
@@ -58,9 +55,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: 'json')]
     private $roles = [];
-
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
 
     public function __construct()
     {
@@ -141,18 +135,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFechaRegistro(\DateTimeInterface $fecha_registro): self
     {
         $this->fecha_registro = $fecha_registro;
-
-        return $this;
-    }
-
-    public function getUltimoAcceso(): ?\DateTimeInterface
-    {
-        return $this->ultimo_acceso;
-    }
-
-    public function setUltimoAcceso(?\DateTimeInterface $ultimo_acceso): self
-    {
-        $this->ultimo_acceso = $ultimo_acceso;
 
         return $this;
     }
@@ -300,15 +282,4 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
 }

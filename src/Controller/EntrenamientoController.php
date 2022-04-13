@@ -83,6 +83,5 @@ class EntrenamientoController extends AbstractController
                                                                       'puntuaciones' => $puntuaciones,
                                                                       'niveles' => $niveles
                                                                     ));
-      //return $this->render('prueba/prueba.html.twig');
   }
 }

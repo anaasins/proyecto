@@ -22,12 +22,6 @@ class DefaultController extends AbstractController
     {
         return $this->render('frontal/contact.html.twig');
     }
-
-    #[Route('/prueba', name: 'prueba_page')]
-   public function pruebaAction(): Response
-   {
-       return $this->render('prueba/prueba.html.twig');
-   }
 }
 
  ?>

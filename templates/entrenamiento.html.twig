@@ -11,6 +11,7 @@
       <div id="cabecera">
         <p id="titulo">{{ejercicio.nombre}}</p>
         <p>Nivel: <span id="nivel">{{entrenamiento.nivelAlcanzado|default(0)}}</span> - Puntos: <span id="puntos">{{entrenamiento.puntuacion|default(0)}}</span></p>
+        <a onclick="empezarCero()" style="color:blue;">Volver a empezar</a>
         {% block cabecera %}{% endblock %}
       </div>
         {% block juego %}
@@ -20,7 +21,6 @@
           <input type="hidden" name="nivel" id="inputNivel" value="{{entrenamiento.nivelAlcanzado|default(0)}}">
           <input type="hidden" name="ejercicio" value="{{ejercicio.id}}">
           <button type="submit" name="button" id="acabar">Acabar entrenamiento</button>
-          <button type="button" name="button" id="empezar" onclick="empezarCero()">Empezar de 0</button>
         </form>
         <div id="instruccionesDiv">
           <fieldset>

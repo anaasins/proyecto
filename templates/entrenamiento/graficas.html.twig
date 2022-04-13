@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Pagina personal
+Mis graficas
 {% endblock %}
 {% block baseStyleSheet %}
   <!-- Favicon-->
@@ -33,9 +33,9 @@ Pagina personal
                     {% endif %}
                     {% for ejer in ejercicios %}
                       {% if datos is not null and ejer.id == datos.0.ejercicio.id %}
-                        <option value="{{ path('graficas_page', {id: ejer.id}) }}" selected>{{ejer.nombre}} - {{ejer.id}}</option>
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}" selected>{{ejer.id}} - {{ejer.nombre}}</option>
                       {% else %}
-                        <option value="{{ path('graficas_page', {id: ejer.id}) }}">{{ejer.nombre}} - {{ejer.id}}</option>
+                        <option value="{{ path('graficas_page', {id: ejer.id}) }}">{{ejer.id}} - {{ejer.nombre}}</option>
                       {% endif %}
                     {% endfor %}
                   </select>

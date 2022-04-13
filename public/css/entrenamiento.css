@@ -42,7 +42,7 @@ canvas{
 
 #botones button{
   margin: 1%;
-  padding: 2%;
+  padding: 1%;
   border-radius: 20px;
   font-family: serif;
   font-size: 20px;
@@ -53,9 +53,6 @@ canvas{
   background-color: green;
 }
 
-#empezar{
-  background-color: red;
-}
 
 #instruccionesDiv{
   top: 500px;

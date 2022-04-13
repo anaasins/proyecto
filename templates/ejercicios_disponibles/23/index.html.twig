@@ -74,7 +74,7 @@
     height = canvas.height;
     width = canvas.width;
     requestID=0;
-    vel = puntos * 0.2;
+    vel = (puntos+0.01) * 0.2;
     direccion="der";
     arriba=true;
     xPelota=width / 2;
@@ -125,6 +125,7 @@
 
     // Aquí puede añadir más funcionalidades si son necesarias para tu ejercicio
     // ej. Volver a cargar la página, resetear variables, etc.
+    vel=0.2;
   }
 
   function dibujarPelota() {

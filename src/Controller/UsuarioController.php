@@ -36,7 +36,7 @@ class UsuarioController extends AbstractController
      {
        $this->denyAccessUnlessGranted('ROLE_USER');
 
-         return $this->render('usuario/index.html.twig');
+         return $this->render('frontal/index.html.twig');
      }
 
     #[Route('/register', name: 'app_register')]
@@ -59,7 +59,6 @@ class UsuarioController extends AbstractController
             $user->setFechaRegistro(new \DateTime('@'.strtotime('now')));
             $rol = $rolRepository->findById(2);
             $user->setRol($rol[0]);
-            $user->setIsVerified(true);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -103,7 +102,7 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
+    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $entityManager): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -119,19 +118,6 @@ class UsuarioController extends AbstractController
     public function logout(): void
     {
       throw new \Exception('Don\'t forget to activate logout in security.yaml');
-    }
-
-    //Activar en security.yaml si realment es necessari guardar el utim acces per algo
-    #[Route('/update', name: 'app_update')]
-    public function update(EntityManagerInterface $entityManager): Response
-    {
-      $this->denyAccessUnlessGranted('ROLE_USER');
-      
-      $user= $this->getUser();
-      $user->setUltimoAcceso(new \DateTime('@'.strtotime('now')));
-      $entityManager->persist($user);
-      $entityManager->flush();
-      return $this->redirectToRoute('home_page');
     }
 
     #[Route('/cambiarContra', name: 'app_changePass')]
