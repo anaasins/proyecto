@@ -36,7 +36,7 @@ class UsuarioController extends AbstractController
      {
        $this->denyAccessUnlessGranted('ROLE_USER');
 
-         return $this->render('frontal/index.html.twig');
+         return $this->redirectToRoute('home_page');
      }
 
     #[Route('/register', name: 'app_register')]
